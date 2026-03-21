@@ -19,7 +19,7 @@ def create_user(username : str, email : str, full_name : str, password : str, ro
         raise ValueError(f"Username '{username}' is already taken. ")
     if User.query.filter.by(email=email).first():
         raise ValueError(f"Email '{email}' is already registered. ")
-    role = Role.query.filter.by(role_name=role).first():
+    role = Role.query.filter.by(role_name=role).first()
     if not role:
         raise ValueError(f"Role '{role}' does not exist")
     user = User(
