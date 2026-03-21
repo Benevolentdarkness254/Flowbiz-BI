@@ -5,10 +5,10 @@ from app.extensions import db
 from app.models.auth import User, Role
 
 def authenticate(username : str, password : str) -> User | None:
-     user = User.query.filter_by(username=username, deleted_at=None).first()
-     if not user or not user.is_active:
-         return None
-     if not check_password_hash(user.password_hash, password):
+    user = User.query.filter_by(username=username, deleted_at=None).first()
+    if not user or not user.is_active:
+        return None
+    if not check_password_hash(user.password_hash, password):
         return None
     user.last_login_at = datetime.utcnow()
     db.session.commit()
