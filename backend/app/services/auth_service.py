@@ -33,3 +33,18 @@ def create_user(username : str, email : str, full_name : str, password : str, ro
     db.session.add(user)
     db.session.commit()
     return user
+
+def seed_admin():
+    if not User.query.filter_by(username='admin').first():
+        create_user(
+            username  = 'admin',
+            email     = 'admin@flowbiz.local',
+            full_name = 'System Administrator',
+            password  = 'FlowbizAdmin2024!',
+            role_name = 'system_admin',
+        )
+        print('Admin user created : admin/FlowbizAdmin2026!')
+    else:
+        print('Admin User already exist')
+        
+
