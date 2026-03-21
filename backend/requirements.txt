@@ -1,0 +1,38 @@
+# Web framework
+flask==3.0.3
+
+# Database ORM — SQLAlchemy 2.0 is bundled automatically
+flask-sqlalchemy==3.1.1
+
+# Database migrations
+flask-migrate==4.0.7
+
+# Authentication via JWT in HTTP-only cookies
+flask-jwt-extended==4.6.0
+
+# Cross-Origin Resource Sharing — lets React on port 5173 call Flask on port 5000
+flask-cors==4.0.1
+
+# Serialization and validation
+marshmallow==3.21.3
+flask-marshmallow==1.2.1
+marshmallow-sqlalchemy==1.1.0
+
+# MySQL driver
+# cryptography is required by pymysql for MySQL 8.0's caching_sha2_password auth plugin
+pymysql==1.1.1
+cryptography==42.0.8
+
+# Environment variable loading from .env files
+python-dotenv==1.0.1
+
+# Background job scheduler
+apscheduler==3.10.4
+
+# HTTP client for calling external APIs (KRA, M-Pesa, SMS)
+requests==2.32.3
+
+# Testing
+pytest==8.2.2
+pytest-flask==1.3.0
+factory-boy==3.3.0
