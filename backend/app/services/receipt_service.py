@@ -1,4 +1,4 @@
-# backend/app/services/receipt_service.py
+
 from sqlalchemy import text
 from app.extensions import db
 from app.models.receipts import Receipt, ReceiptPrintLog
