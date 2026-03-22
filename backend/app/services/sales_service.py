@@ -4,7 +4,7 @@ from app.models.sales import SaleTransaction, SaleItem, Customer
 from app.models.inventory import Product
 from app.models.enums import StockMovementType, PaymentMethod, PaymentStatus
 from app.services.inventory_service import adjust_stock
-from app.services.receipt_service import issue_payment_reciept
+from app.services.receipt_service import issue_payment_receipt
 
 VAT_RATE = decimal.Decimal('0.16')
 def create_sale(data: dict, staff_id: int ) -> SaleTransaction:
@@ -65,6 +65,6 @@ def create_sale(data: dict, staff_id: int ) -> SaleTransaction:
 
     # 6. Commit everything atomically
     db.session.commit()
-    issue_payment_reciept(txn, staff_user_id)
+    issue_payment_receipt(txn, staff_user_id)
     return txn
 

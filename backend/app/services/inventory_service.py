@@ -25,10 +25,10 @@ def adjust_stock(product_id: int, quantity_change: int, movement_type: StockMove
         notes           = notes,
     )
     db.session.add(movement)
-    _check_and_craeate_alert(product)
+    _check_and_create_alert(product)
     return movement
 
-def _check_and_craeate_alert(product: Product):
+def _check_and_create_alert(product: Product):
     if product.current_stock <= 0:
         alert_type = 'out of stock'
     elif product.current_stock <= product.min_stock_level:

@@ -1,5 +1,4 @@
 from datetime import datetime
-from tkinter.constants import N
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import db
 from app.models.auth import User, Role
