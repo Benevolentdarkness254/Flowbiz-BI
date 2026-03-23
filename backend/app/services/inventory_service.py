@@ -2,7 +2,7 @@ from app.extensions import db
 from app.models.inventory import Product, InventoryMovement, StockAlert
 from app.models.enums import StockMovementType
 
-def adjust_stock(product_id: int, quantity_change: int, movement_type: StockMovementType, performed_by_id: int, reference_type: str = None, refrence_id: int = None, notes: str = None) -> InventoryMovement:
+def adjust_stock(product_id: int, quantity_change: int, movement_type: StockMovementType, performed_by_id: int, reference_type: str = None, reference_id: int = None, notes: str = None) -> InventoryMovement:
     product = db.session.get(Product, product_id)
     if not product: 
         raise ValueError (f"Product {product} is not found. ")
@@ -10,7 +10,7 @@ def adjust_stock(product_id: int, quantity_change: int, movement_type: StockMove
     new_stock = product.current_stock + quantity_change
     if new_stock < 0:
         raise ValueError(
-            f"Insufficent stock for {product.name}."
+            f"Insufficient stock for {product.name}."
             f"Available: {product.current_stock}, Requested: {abs(quantity_change)}"
         )
     product.current_stock = new_stock

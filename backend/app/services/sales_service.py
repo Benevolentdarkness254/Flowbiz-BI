@@ -7,7 +7,7 @@ from app.services.inventory_service import adjust_stock
 from app.services.receipt_service import issue_payment_receipt
 
 VAT_RATE = decimal.Decimal('0.16')
-def create_sale(data: dict, staff_id: int ) -> SaleTransaction:
+def create_sale(data: dict, staff_user_id: int ) -> SaleTransaction:
     items_data = data.get('items', [] )
     if not items_data:
         raise ValueError(f"A sale must have atleast one item")
@@ -17,8 +17,8 @@ def create_sale(data: dict, staff_id: int ) -> SaleTransaction:
             raise ValueError(f"Product {item['product_id']} not found or is inactive")
         if product.current_stock < item['quantity']:
             raise ValueError(
-                f"Insufficent Stock for {product.name} ."
-                f"Availiable: {product.current_stock}, requested {item['quantity']}"
+                f"Insufficient Stock for {product.name} ."
+                f"Available: {product.current_stock}, requested {item['quantity']}"
             )
     D = decimal.Decimal
     lines_totals = [

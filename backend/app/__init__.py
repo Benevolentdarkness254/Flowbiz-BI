@@ -8,11 +8,11 @@ def create_app(config: str = 'config.settings.Config') -> Flask:
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
-    cors.init_app(app, resource={
-        'r/api/*' : {
-         'orgins' : ['http://localhot:5173'],
-         'supports_crendentials' : True,
-         'method' : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    cors.init_app(app, resources={
+        r'/api/*' : {
+         'origins' : ['http://localhost:5173'],
+         'supports_credentials' : True,
+         'methods' : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
          'allow_headers' : ['Content-Type', 'authorization'],
         }
     })

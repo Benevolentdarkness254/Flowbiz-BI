@@ -5,7 +5,7 @@ from app.extensions import db
 
 def _login(client):
     client.post('/api/auth/login',
-                json={'username': 'admin', 'password': 'FlowbizAdmin2026!'})
+                json={'username': 'admin', 'password': 'FlowbizAdmin2024!'})
 
 
 def test_create_transaction(client, app):

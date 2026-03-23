@@ -14,11 +14,11 @@ def authenticate(username : str, password : str) -> User | None:
     return user
 
 def create_user(username : str, email : str, full_name : str, password : str, role_name : str, phone_number : str = None) -> User:
-    if User.query.filter.by(username=username).first():
+    if User.query.filter_by(username=username).first():
         raise ValueError(f"Username '{username}' is already taken. ")
-    if User.query.filter.by(email=email).first():
+    if User.query.filter_by(email=email).first():
         raise ValueError(f"Email '{email}' is already registered. ")
-    role = Role.query.filter.by(role_name=role).first()
+    role = Role.query.filter_by(role_name=role_name).first()
     if not role:
         raise ValueError(f"Role '{role}' does not exist")
     user = User(
@@ -27,7 +27,7 @@ def create_user(username : str, email : str, full_name : str, password : str, ro
             full_name     = full_name,
             password_hash = generate_password_hash(password),
             role_id       = role.role_id,
-            phone         = phone,
+                        phone         = phone_number,
         )
     db.session.add(user)
     db.session.commit()
@@ -42,7 +42,7 @@ def seed_admin():
             password  = 'FlowbizAdmin2024!',
             role_name = 'system_admin',
         )
-        print('Admin user created : admin/FlowbizAdmin2026!')
+        print('Admin user created : admin/FlowbizAdmin2024!')
     else:
         print('Admin User already exist')
         
