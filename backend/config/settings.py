@@ -18,7 +18,7 @@ class Config:
     JWT_COOKIE_CSRF_PROTECT    = os.environ.get('JWT_COOKIE_CSRF_PROTECT', 'False') == 'True'
     JWT_ACCESS_TOKEN_EXPIRES   = False
     # This is required for cookies to work in the Flask test client
-    JWT_COOKIE_SAMESITE        = 'Lax'
+    JWT_COOKIE_SAMESITE        = os.environ.get('JWT_COOKIE_SAMESITE', 'Lax')
 
 
 class TestingConfig(Config):

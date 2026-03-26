@@ -1,0 +1,15 @@
+[2026-03-26 10:18:59,870] INFO in dim_date_seeder: dim_date already has 2557 rows — skipping seed
+[2026-03-26 10:18:59,884] INFO in __init__: Background scheduler started
+ * Serving Flask app 'wsgi.py'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[2026-03-26 10:19:08,194] INFO in dim_date_seeder: dim_date already has 2557 rows — skipping seed
+[2026-03-26 10:19:08,218] INFO in __init__: Background scheduler started
+ * Debugger is active!
+ * Debugger PIN: 141-273-237
+127.0.0.1 - - [26/Mar/2026 10:19:56] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Mar/2026 10:20:34] "GET /api/auth/me HTTP/1.1" 200 -
+127.0.0.1 - - [26/Mar/2026 10:20:51] "[31m[1mGET /api/bi/dashboard HTTP/1.1[0m" 403 -
