@@ -31,17 +31,49 @@ export default function App() {
                 <Sales />
               </ProtectedRoute>
             } />
-
+            
+            <Route path="customers" element={
+              <ProtectedRoute permission="customer.manage"><Customers /></ProtectedRoute>
+            } />
+            
             <Route path="inventory" element={
               <ProtectedRoute permission="inventory.view">
                 <Inventory />
               </ProtectedRoute>
             } />
 
+            <Route path="purchase-orders" element={
+              <ProtectedRoute permission="po.view"><PurchaseOrders /></ProtectedRoute>
+            } />
+
+            <Route path="receipts" element={
+              <ProtectedRoute permission="receipt.view"><Receipts /></ProtectedRoute>
+            } />
+
             <Route path="reports" element={
               <ProtectedRoute permission="report.view">
                 <Reports />
               </ProtectedRoute>
+            } />
+            
+            <Route path="deliveries" element={
+              <ProtectedRoute permission="delivery.view"><Deliveries /></ProtectedRoute>
+            } />
+
+             <Route path="system/logs" element={
+              <ProtectedRoute permission="system.logs"><SystemLogs /></ProtectedRoute>
+            } />
+
+            <Route path="system/audit" element={
+              <ProtectedRoute permission="system.audit"><AuditTrail /></ProtectedRoute>
+            } />
+
+            <Route path="system/backups" element={
+              <ProtectedRoute permission="system.backup"><Backups /></ProtectedRoute>
+            } />
+
+            <Route path="settings" element={
+              <ProtectedRoute permission="system.config"><Settings /></ProtectedRoute>
             } />
 
             {/* 403 page */}

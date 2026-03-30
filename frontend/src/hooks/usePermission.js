@@ -1,4 +1,4 @@
-// frontend/src/hooks/usePermissions.js
+// frontend/src/hooks/usePermission.js
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 

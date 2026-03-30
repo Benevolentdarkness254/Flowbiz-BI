@@ -12,6 +12,11 @@ export const NAV_ITEMS = [
   { label: 'Purchase Orders', path: '/purchase-orders', permission: 'po.view' },
   { label: 'Receipts',        path: '/receipts',        permission: 'receipt.issue' },
   { label: 'Reports',         path: '/reports',         permission: 'report.view' },
+  { label: 'Deliveries',      path: '/deliveries',      permission: 'delivery.view' },
+  { label: 'System Logs',     path: '/system/logs',     permission: 'system.logs' },
+  { label: 'Audit Trail',     path: '/system/audit',    permission: 'system.audit' },
+  { label: 'Backups',         path: '/system/backups',  permission: 'system.backup' },
+  { label: 'Settings',        path: '/settings',        permission: 'system.config' },
   { label: 'Settings',        path: '/settings',        permission: 'system.config' },
 ]
 

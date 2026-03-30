@@ -1,15 +1,1887 @@
-[2026-03-26 10:18:59,870] INFO in dim_date_seeder: dim_date already has 2557 rows — skipping seed
-[2026-03-26 10:18:59,884] INFO in __init__: Background scheduler started
+[2026-03-26 17:34:01,942] INFO in dim_date_seeder: dim_date already has 2557 rows — skipping seed
+[2026-03-26 17:34:01,950] INFO in __init__: Background scheduler started
  * Serving Flask app 'wsgi.py'
  * Debug mode: on
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
 [33mPress CTRL+C to quit[0m
  * Restarting with stat
-[2026-03-26 10:19:08,194] INFO in dim_date_seeder: dim_date already has 2557 rows — skipping seed
-[2026-03-26 10:19:08,218] INFO in __init__: Background scheduler started
+[2026-03-26 17:34:06,100] INFO in dim_date_seeder: dim_date already has 2557 rows — skipping seed
+[2026-03-26 17:34:06,109] INFO in __init__: Background scheduler started
  * Debugger is active!
- * Debugger PIN: 141-273-237
-127.0.0.1 - - [26/Mar/2026 10:19:56] "POST /api/auth/login HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 10:20:34] "GET /api/auth/me HTTP/1.1" 200 -
-127.0.0.1 - - [26/Mar/2026 10:20:51] "[31m[1mGET /api/bi/dashboard HTTP/1.1[0m" 403 -
+ * Debugger PIN: 117-704-741
+127.0.0.1 - - [26/Mar/2026 17:34:23] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Mar/2026 17:34:32] "POST /api/auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Mar/2026 17:34:49] "GET /api/auth/me HTTP/1.1" 200 -
+127.0.0.1 - - [26/Mar/2026 17:35:01] "GET /api/auth/me HTTP/1.1" 200 -
+127.0.0.1 - - [26/Mar/2026 17:35:17] "[31m[1mGET /api/bi/dashboard HTTP/1.1[0m" 403 -
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-27 15:15:00 EAT)" was missed by 0:01:04.734165
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-26 18:00:00 EAT)" was missed by 0:01:04.737294
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[hour='0', minute='5'], next run at: 2026-03-28 00:05:00 EAT)" was missed by 14:56:04.740003
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-27 15:15:00 EAT)" was missed by 0:01:04.747919
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-26 18:00:00 EAT)" was missed by 0:01:04.754040
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[hour='0', minute='5'], next run at: 2026-03-28 00:05:00 EAT)" was missed by 14:56:04.756357
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 16:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 16:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 16:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 16:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 17:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 17:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 17:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 17:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 18:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 18:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 18:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 18:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-27 19:30:00 EAT)" was missed by 0:02:09.659152
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-27 19:30:00 EAT)" was missed by 0:02:09.658514
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 19:30:00 EAT)" was missed by 0:17:09.661323
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 19:30:00 EAT)" was missed by 0:17:09.661310
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 20:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 20:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 20:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 20:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 21:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 21:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 21:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 21:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 22:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 22:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 22:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 22:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 23:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 23:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 23:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-27 23:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 12:15:00 EAT)" was missed by 0:03:49.312289
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 12:15:00 EAT)" was missed by 0:03:49.312406
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 12:30:00 EAT)" was missed by 0:03:49.313935
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 12:30:00 EAT)" was missed by 0:03:49.313071
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[hour='0', minute='5'], next run at: 2026-03-29 00:05:00 EAT)" was missed by 11:58:49.313559
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[hour='0', minute='5'], next run at: 2026-03-29 00:05:00 EAT)" was missed by 11:58:49.314652
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 12:30:00 EAT)" was missed by 0:09:10.445195
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 12:30:00 EAT)" was missed by 0:09:10.445046
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 13:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 13:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 17:45:00 EAT)" was missed by 0:06:09.276313
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 18:00:00 EAT)" was missed by 0:06:09.276850
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 17:45:00 EAT)" was missed by 0:06:09.278360
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 18:00:00 EAT)" was missed by 0:06:09.279036
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 18:00:00 EAT)" was missed by 0:06:27.598835
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-28 18:00:00 EAT)" was missed by 0:06:27.606232
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 18:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 18:30:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 19:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-28 19:00:00 EAT)" raised an exception
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1709, in _object_value_for_elem
+    return self._object_lookup[elem]  # type: ignore[return-value]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'packaged_water'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/__init__.py", line 46, in <lambda>
+    lambda: check_stock_levels(app),
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/Codespace/flowbiz/backend/app/jobs/stock_checker.py", line 15, in check_stock_levels
+    products = Product.query.filter_by(is_active=True, deleted_at=None).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1786, in all
+    return self._allrows()
+           ^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 560, in _allrows
+    rows = self._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 1693, in _fetchall_impl
+    return self._real_result._fetchall_impl()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 2287, in _fetchall_impl
+    return list(self.iterator)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 220, in chunks
+    fetch = cursor._raw_all_rows()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in _raw_all_rows
+    return [make_row(row) for row in rows]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/engine/result.py", line 553, in <listcomp>
+    return [make_row(row) for row in rows]
+            ^^^^^^^^^^^^^
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 22, in sqlalchemy.cyextension.resultproxy.BaseRow.__init__
+  File "lib/sqlalchemy/cyextension/resultproxy.pyx", line 79, in sqlalchemy.cyextension.resultproxy._apply_processors
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1829, in process
+    value = self._object_value_for_elem(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/dialects/mysql/enumerated.py", line 110, in _object_value_for_elem
+    return super()._object_value_for_elem(elem)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kariuki/.pyenv/versions/3.11.9/envs/flowbiz-env/lib/python3.11/site-packages/sqlalchemy/sql/sqltypes.py", line 1711, in _object_value_for_elem
+    raise LookupError(
+LookupError: 'packaged_water' is not among the defined enum values. Enum name: productcategory. Possible values: PACKAGED_WA.., REFILL_SERV.., CONTAINER, ..., OTHER
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-29 06:00:00 EAT)" was missed by 0:14:44.896443
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-29 06:00:00 EAT)" was missed by 0:14:44.896945
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-29 06:00:00 EAT)" was missed by 0:29:44.898361
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[hour='0', minute='5'], next run at: 2026-03-30 00:05:00 EAT)" was missed by 5:54:44.898947
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-29 06:00:00 EAT)" was missed by 0:29:44.899595
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[hour='0', minute='5'], next run at: 2026-03-30 00:05:00 EAT)" was missed by 5:54:44.900151
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-29 06:15:00 EAT)" was missed by 0:00:06.238055
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/15'], next run at: 2026-03-29 06:15:00 EAT)" was missed by 0:00:06.237998
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-29 06:30:00 EAT)" was missed by 0:00:06.238652
+Run time of job "init_scheduler.<locals>.<lambda> (trigger: cron[minute='*/30'], next run at: 2026-03-29 06:30:00 EAT)" was missed by 0:00:06.238638

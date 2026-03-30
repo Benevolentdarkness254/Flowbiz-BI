@@ -1,7 +1,7 @@
 // frontend/src/hooks/usePermission.test.js
 import { renderHook } from '@testing-library/react'
 import { AuthContext } from '../context/AuthContext'
-import { usePermission } from './usePermissions'
+import { usePermission } from './usePermission'
 
 const wrapper = ({ children, permissions }) => (
   <AuthContext.Provider value={{ permissions, user: null, loading: false }}>
