@@ -1,0 +1,555 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:13px;color:var(--color-text-primary)}
+.toolbar{display:flex;align-items:center;gap:8px;padding:10px 0 14px;flex-wrap:wrap}
+.page-btn{padding:5px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;font-size:12px;transition:all .15s}
+.page-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.toggle{display:flex;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);overflow:hidden;margin-left:auto}
+.toggle button{padding:5px 14px;border:none;background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;font-size:12px}
+.toggle button.active{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
+.frame{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-tertiary)}
+
+/* lo-fi */
+.lf-shell{display:flex;height:520px}
+.lf-side{width:140px;background:#d3d1c7;padding:12px 8px;flex-shrink:0}
+.lf-logo{height:20px;background:#888780;border-radius:3px;margin-bottom:16px}
+.lf-nav-item{height:12px;background:#b4b2a9;border-radius:2px;margin-bottom:8px}
+.lf-nav-item.active{background:#5f5e5a}
+.lf-main{flex:1;display:flex;flex-direction:column}
+.lf-topbar{height:38px;background:#e8e6df;border-bottom:0.5px solid #b4b2a9;display:flex;align-items:center;justify-content:flex-end;padding:0 12px;gap:8px}
+.lf-tb-pill{height:10px;width:50px;background:#b4b2a9;border-radius:2px}
+.lf-content{flex:1;padding:14px;overflow:hidden}
+.lf-page-title{height:14px;width:120px;background:#888780;border-radius:2px;margin-bottom:14px}
+.lf-row{display:flex;gap:10px;margin-bottom:10px}
+.lf-card{background:#e8e6df;border-radius:4px;border:0.5px solid #b4b2a9;flex:1;padding:10px}
+.lf-card-label{height:8px;width:60%;background:#b4b2a9;border-radius:2px;margin-bottom:6px}
+.lf-card-value{height:18px;width:40%;background:#5f5e5a;border-radius:2px}
+.lf-table-header{height:10px;background:#888780;border-radius:2px;margin-bottom:6px}
+.lf-table-row{height:8px;background:#d3d1c7;border-radius:2px;margin-bottom:5px}
+.lf-btn{height:24px;width:80px;background:#5f5e5a;border-radius:3px}
+.lf-chart{background:#e8e6df;border-radius:4px;border:0.5px solid #b4b2a9;height:120px;display:flex;align-items:flex-end;gap:6px;padding:10px}
+.lf-bar{background:#888780;border-radius:2px 2px 0 0;flex:1}
+.lf-form-field{height:26px;background:#e8e6df;border-radius:3px;border:0.5px solid #b4b2a9;margin-bottom:8px}
+.lf-form-label{height:8px;width:50px;background:#b4b2a9;border-radius:2px;margin-bottom:4px}
+.lf-annotation{font-size:10px;color:#888780;margin-top:4px}
+
+/* hi-fi */
+.hf-shell{display:flex;height:520px}
+.hf-sidebar{width:160px;background:#1a1a2e;padding:14px 10px;flex-shrink:0;display:flex;flex-direction:column}
+.hf-logo{color:#fff;font-weight:500;font-size:15px;margin-bottom:20px;padding-left:4px}
+.hf-nav{display:flex;flex-direction:column;gap:2px}
+.hf-nav-item{padding:7px 10px;border-radius:6px;color:#9494b8;font-size:12px;cursor:pointer}
+.hf-nav-item.active{background:#185fa5;color:#fff}
+.hf-main{flex:1;display:flex;flex-direction:column;background:var(--color-background-tertiary)}
+.hf-topbar{height:44px;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:flex-end;padding:0 16px;gap:10px}
+.hf-avatar{width:28px;height:28px;border-radius:50%;background:#185fa5;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500}
+.hf-content{flex:1;padding:16px;overflow:hidden}
+.hf-page-title{font-size:16px;font-weight:500;margin-bottom:14px;color:var(--color-text-primary)}
+.hf-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.hf-stat{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:10px 12px}
+.hf-stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.hf-stat-value{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.hf-stat-sub{font-size:10px;margin-top:2px}
+.hf-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:12px}
+.hf-table{width:100%;border-collapse:collapse;font-size:12px}
+.hf-table th{text-align:left;padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);font-weight:500;font-size:11px}
+.hf-table td{padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary)}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:500}
+.badge-success{background:#eaf3de;color:#27500a}
+.badge-warning{background:#faeeda;color:#633806}
+.badge-danger{background:#fcebeb;color:#791f1f}
+.badge-info{background:#e6f1fb;color:#0c447c}
+.badge-secondary{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.hf-btn-primary{background:#185fa5;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer}
+.hf-btn-outline{background:transparent;border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:6px 14px;font-size:12px;cursor:pointer;color:var(--color-text-primary)}
+.hf-input{border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:6px 10px;font-size:12px;width:100%;background:var(--color-background-primary);color:var(--color-text-primary)}
+.hf-chart-bars{display:flex;align-items:flex-end;gap:5px;height:90px;padding:0 0 0}
+.hf-bar{border-radius:3px 3px 0 0;flex:1;background:#185fa5;opacity:.8}
+.hf-row{display:flex;gap:10px;margin-bottom:10px}
+.hf-alert{background:#faeeda;border:0.5px solid #ef9f27;border-radius:6px;padding:8px 12px;font-size:12px;color:#633806;margin-bottom:10px}
+</style>
+
+<div class="toolbar">
+  <button class="page-btn active" onclick="showPage('dashboard')">Dashboard</button>
+  <button class="page-btn" onclick="showPage('login')">Login</button>
+  <button class="page-btn" onclick="showPage('sales')">Sales</button>
+  <button class="page-btn" onclick="showPage('inventory')">Inventory</button>
+  <button class="page-btn" onclick="showPage('reports')">Reports</button>
+  <button class="page-btn" onclick="showPage('receipts')">Receipts</button>
+  <button class="page-btn" onclick="showPage('pos')">Purchase orders</button>
+  <div class="toggle">
+    <button class="active" onclick="setFidelity('lo')">Lo-fi</button>
+    <button onclick="setFidelity('hi')">Hi-fi</button>
+  </div>
+</div>
+
+<div class="frame" id="wireframe-area"></div>
+
+<script>
+let currentPage = 'dashboard';
+let currentFidelity = 'lo';
+
+const nav = ['Dashboard','Sales','Inventory','Reports','Receipts','Purchase orders','Settings'];
+
+function sidebar(active){
+  return nav.map(n=>`<div class="hf-nav-item${n.toLowerCase()===active||n.toLowerCase().replace(' ','')+''===active?' active':''}">${n}</div>`).join('');
+}
+
+function lf_sidebar(active){
+  return `<div class="lf-logo"></div>`+nav.map(n=>`<div class="lf-nav-item${n.toLowerCase()===active?'':''} ${n.toLowerCase()===active||n.toLowerCase().replace(' ','')+''===active?'active':''}"></div>`).join('');
+}
+
+const pages = {
+  login:{
+    lo:`<div style="height:520px;background:#d3d1c7;display:flex;align-items:center;justify-content:center">
+      <div style="width:260px;background:#e8e6df;border-radius:6px;border:0.5px solid #b4b2a9;padding:24px">
+        <div style="height:18px;width:80px;background:#5f5e5a;border-radius:3px;margin:0 auto 24px"></div>
+        <div class="lf-form-label"></div><div class="lf-form-field"></div>
+        <div class="lf-form-label"></div><div class="lf-form-field"></div>
+        <div style="height:30px;background:#5f5e5a;border-radius:3px;margin-top:14px"></div>
+        <div class="lf-annotation" style="text-align:center;margin-top:8px">sign in button</div>
+      </div>
+    </div>`,
+    hi:`<div style="height:520px;background:#f0f2f5;display:flex;align-items:center;justify-content:center">
+      <div style="width:320px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:28px">
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:18px;font-weight:500;color:var(--color-text-primary)">Flowbiz</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px">Water business management</div>
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="font-size:12px;color:var(--color-text-secondary);display:block;margin-bottom:4px">Username</label>
+          <input class="hf-input" value="admin" readonly>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="font-size:12px;color:var(--color-text-secondary);display:block;margin-bottom:4px">Password</label>
+          <input class="hf-input" type="password" value="password" readonly>
+        </div>
+        <button class="hf-btn-primary" style="width:100%;padding:8px">Sign in</button>
+        <div style="font-size:11px;color:var(--color-text-tertiary);text-align:center;margin-top:12px">Flowbiz v1.0 — Water Packing System</div>
+      </div>
+    </div>`
+  },
+  dashboard:{
+    lo:`<div class="lf-shell">
+      <div class="lf-side">${lf_sidebar('dashboard')}</div>
+      <div class="lf-main">
+        <div class="lf-topbar"><div class="lf-tb-pill"></div><div class="lf-tb-pill" style="width:28px;height:28px;border-radius:50%"></div></div>
+        <div class="lf-content">
+          <div class="lf-page-title"></div>
+          <div class="lf-row">
+            ${[1,2,3,4].map(()=>`<div class="lf-card"><div class="lf-card-label"></div><div class="lf-card-value"></div></div>`).join('')}
+          </div>
+          <div class="lf-annotation" style="margin-bottom:10px">stat cards — revenue, transactions, stock alerts, pending POs</div>
+          <div class="lf-row">
+            <div class="lf-card" style="flex:2">
+              <div class="lf-card-label" style="width:80px;margin-bottom:10px"></div>
+              <div class="lf-chart">${[60,80,45,90,70,55,85,40,75,60,95,50].map(h=>`<div class="lf-bar" style="height:${h}%"></div>`).join('')}</div>
+              <div class="lf-annotation">revenue chart (recharts line chart)</div>
+            </div>
+            <div class="lf-card" style="flex:1">
+              <div class="lf-card-label" style="margin-bottom:8px"></div>
+              ${[1,2,3,4].map(()=>`<div style="display:flex;gap:6px;margin-bottom:6px"><div class="lf-table-row" style="flex:2"></div><div class="lf-table-row" style="flex:1"></div></div>`).join('')}
+              <div class="lf-annotation">low stock alerts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+    hi:`<div class="hf-shell">
+      <div class="hf-sidebar">
+        <div class="hf-logo">Flowbiz</div>
+        <div class="hf-nav">${sidebar('dashboard')}</div>
+      </div>
+      <div class="hf-main">
+        <div class="hf-topbar">
+          <span style="font-size:12px;color:var(--color-text-secondary)">System Admin</span>
+          <div class="hf-avatar">SA</div>
+        </div>
+        <div class="hf-content">
+          <div class="hf-page-title">Dashboard</div>
+          <div class="hf-stat-grid">
+            <div class="hf-stat"><div class="hf-stat-label">Today's revenue</div><div class="hf-stat-value">KES 84,200</div><div class="hf-stat-sub" style="color:#27500a">+12% vs yesterday</div></div>
+            <div class="hf-stat"><div class="hf-stat-label">Transactions</div><div class="hf-stat-value">47</div><div class="hf-stat-sub" style="color:var(--color-text-secondary)">Today</div></div>
+            <div class="hf-stat"><div class="hf-stat-label">Stock alerts</div><div class="hf-stat-value" style="color:#ba7517">3</div><div class="hf-stat-sub" style="color:#ba7517">Low stock</div></div>
+            <div class="hf-stat"><div class="hf-stat-label">Pending approvals</div><div class="hf-stat-value">2</div><div class="hf-stat-sub" style="color:var(--color-text-secondary)">Purchase orders</div></div>
+          </div>
+          <div class="hf-alert">Low stock: 20L Jerrican (8 remaining), 5L Bottle (12 remaining), Spring Water 1L (5 remaining)</div>
+          <div class="hf-row">
+            <div class="hf-card" style="flex:2">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <span style="font-size:13px;font-weight:500">Revenue — last 12 days</span>
+                <span style="font-size:11px;color:var(--color-text-secondary)">KES</span>
+              </div>
+              <div class="hf-chart-bars">${[55,70,40,85,65,50,80,35,70,55,90,45].map(h=>`<div class="hf-bar" style="height:${h}%"></div>`).join('')}</div>
+            </div>
+            <div class="hf-card" style="flex:1">
+              <div style="font-size:13px;font-weight:500;margin-bottom:8px">Recent transactions</div>
+              ${[['Walk-in','KES 1,200','paid'],['Account','KES 4,500','partial'],['Wholesale','KES 12,000','paid']].map(([t,a,s])=>`
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+                <span style="font-size:11px;color:var(--color-text-secondary)">${t}</span>
+                <span style="font-size:11px;font-weight:500">${a}</span>
+                <span class="badge badge-${s==='paid'?'success':'warning'}">${s}</span>
+              </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+  sales:{
+    lo:`<div class="lf-shell">
+      <div class="lf-side">${lf_sidebar('sales')}</div>
+      <div class="lf-main">
+        <div class="lf-topbar"><div class="lf-tb-pill"></div><div class="lf-tb-pill" style="width:28px;height:28px;border-radius:50%"></div></div>
+        <div class="lf-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="lf-page-title" style="margin:0"></div>
+            <div class="lf-btn"></div>
+          </div>
+          <div class="lf-annotation" style="margin-bottom:10px">"New sale" button — opens modal (sale.create permission)</div>
+          <div class="lf-card">
+            <div class="lf-table-header" style="margin-bottom:10px"></div>
+            ${[1,2,3,4,5,6].map(()=>`<div class="lf-table-row" style="height:14px;margin-bottom:6px"></div>`).join('')}
+          </div>
+          <div class="lf-annotation">table: ID, customer, date, total, method, status — paginated</div>
+        </div>
+      </div>
+    </div>`,
+    hi:`<div class="hf-shell">
+      <div class="hf-sidebar">
+        <div class="hf-logo">Flowbiz</div>
+        <div class="hf-nav">${sidebar('sales')}</div>
+      </div>
+      <div class="hf-main">
+        <div class="hf-topbar">
+          <span style="font-size:12px;color:var(--color-text-secondary)">Sales Staff</span>
+          <div class="hf-avatar" style="background:#0f6e56">SS</div>
+        </div>
+        <div class="hf-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div class="hf-page-title" style="margin:0">Sales transactions</div>
+            <button class="hf-btn-primary">+ New sale</button>
+          </div>
+          <div class="hf-card">
+            <table class="hf-table">
+              <thead><tr><th>#</th><th>Customer</th><th>Date</th><th>Total</th><th>Method</th><th>Status</th></tr></thead>
+              <tbody>
+                ${[['1042','Nairobi Gym','Today 14:32','KES 4,500','mpesa','paid'],
+                   ['1041','Walk-in','Today 13:15','KES 800','cash','paid'],
+                   ['1040','Westlands Apt','Today 11:40','KES 12,000','credit','partial'],
+                   ['1039','ABC School','Yesterday','KES 6,400','bank_transfer','paid'],
+                   ['1038','Walk-in','Yesterday','KES 350','cash','paid']
+                  ].map(([id,c,d,t,m,s])=>`<tr>
+                  <td style="color:var(--color-text-secondary)">${id}</td>
+                  <td style="font-weight:500">${c}</td>
+                  <td style="color:var(--color-text-secondary)">${d}</td>
+                  <td style="font-weight:500">${t}</td>
+                  <td><span class="badge badge-secondary">${m}</span></td>
+                  <td><span class="badge badge-${s==='paid'?'success':s==='partial'?'warning':'info'}">${s}</span></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--color-text-secondary)">
+              <span>Showing 5 of 1,042 transactions</span>
+              <div style="display:flex;gap:6px">
+                <button class="hf-btn-outline" style="padding:3px 10px;font-size:11px">Prev</button>
+                <button class="hf-btn-outline" style="padding:3px 10px;font-size:11px">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+  inventory:{
+    lo:`<div class="lf-shell">
+      <div class="lf-side">${lf_sidebar('inventory')}</div>
+      <div class="lf-main">
+        <div class="lf-topbar"><div class="lf-tb-pill"></div><div class="lf-tb-pill" style="width:28px;height:28px;border-radius:50%"></div></div>
+        <div class="lf-content">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+            <div class="lf-page-title" style="margin:0"></div>
+            <div class="lf-btn"></div>
+          </div>
+          <div class="lf-annotation" style="margin-bottom:8px">"Manual adjustment" button (inventory.adjust permission)</div>
+          <div class="lf-row" style="margin-bottom:10px">
+            ${['ok','low','out'].map(l=>`<div class="lf-card"><div class="lf-card-label"></div><div class="lf-card-value" style="width:30px"></div></div>`).join('')}
+          </div>
+          <div class="lf-annotation" style="margin-bottom:10px">summary: ok / low stock / out of stock counts</div>
+          <div class="lf-card">
+            <div class="lf-table-header" style="margin-bottom:8px"></div>
+            ${[1,2,3,4,5,6].map(()=>`<div style="display:flex;gap:8px;margin-bottom:5px">${[1,2,3,4,5,6].map(()=>`<div class="lf-table-row" style="flex:1;height:10px"></div>`).join('')}</div>`).join('')}
+          </div>
+          <div class="lf-annotation">columns: SKU, product, category, stock, min level, status</div>
+        </div>
+      </div>
+    </div>`,
+    hi:`<div class="hf-shell">
+      <div class="hf-sidebar">
+        <div class="hf-logo">Flowbiz</div>
+        <div class="hf-nav">${sidebar('inventory')}</div>
+      </div>
+      <div class="hf-main">
+        <div class="hf-topbar">
+          <span style="font-size:12px;color:var(--color-text-secondary)">Inventory Staff</span>
+          <div class="hf-avatar" style="background:#854f0b">IS</div>
+        </div>
+        <div class="hf-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="hf-page-title" style="margin:0">Inventory status</div>
+            <button class="hf-btn-outline">Manual adjustment</button>
+          </div>
+          <div class="hf-row" style="margin-bottom:12px">
+            <div class="hf-stat" style="flex:1"><div class="hf-stat-label">In stock</div><div class="hf-stat-value" style="color:#27500a">18</div></div>
+            <div class="hf-stat" style="flex:1"><div class="hf-stat-label">Low stock</div><div class="hf-stat-value" style="color:#ba7517">3</div></div>
+            <div class="hf-stat" style="flex:1"><div class="hf-stat-label">Out of stock</div><div class="hf-stat-value" style="color:#a32d2d">1</div></div>
+          </div>
+          <div class="hf-card">
+            <table class="hf-table">
+              <thead><tr><th>SKU</th><th>Product</th><th>Category</th><th>Stock</th><th>Min level</th><th>Status</th></tr></thead>
+              <tbody>
+                ${[['SKU-0001','20L Jerrican (refill)','refill_service','8','10','low_stock'],
+                   ['SKU-0002','5L Bottle pack','packaged_water','12','15','low_stock'],
+                   ['SKU-0003','500ml Bottle','packaged_water','240','20','ok'],
+                   ['SKU-0004','10L Jerrican','packaged_water','0','5','out_of_stock'],
+                   ['SKU-0005','1L Spring Water','packaged_water','45','20','ok']
+                  ].map(([s,n,c,st,m,status])=>`<tr>
+                  <td><code style="font-size:10px;color:var(--color-text-secondary)">${s}</code></td>
+                  <td style="font-weight:500">${n}</td>
+                  <td style="color:var(--color-text-secondary)">${c.replace('_',' ')}</td>
+                  <td style="font-weight:500">${st}</td>
+                  <td style="color:var(--color-text-secondary)">${m}</td>
+                  <td><span class="badge badge-${status==='ok'?'success':status==='low_stock'?'warning':'danger'}">${status.replace('_',' ')}</span></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+  reports:{
+    lo:`<div class="lf-shell">
+      <div class="lf-side">${lf_sidebar('reports')}</div>
+      <div class="lf-main">
+        <div class="lf-topbar"><div class="lf-tb-pill"></div><div class="lf-tb-pill" style="width:28px;height:28px;border-radius:50%"></div></div>
+        <div class="lf-content">
+          <div class="lf-page-title"></div>
+          <div class="lf-row" style="margin-bottom:12px;align-items:flex-end">
+            <div style="flex:1"><div class="lf-form-label"></div><div class="lf-form-field"></div></div>
+            <div style="flex:1"><div class="lf-form-label"></div><div class="lf-form-field"></div></div>
+            <div class="lf-btn"></div>
+          </div>
+          <div class="lf-annotation" style="margin-bottom:10px">date range picker + run report button</div>
+          <div class="lf-card" style="margin-bottom:10px">
+            <div class="lf-card-label" style="margin-bottom:10px"></div>
+            <div class="lf-chart">${[50,70,45,85,60,75,40,90,65,55,80,70].map(h=>`<div class="lf-bar" style="height:${h}%"></div>`).join('')}</div>
+            <div class="lf-annotation">recharts LineChart — net revenue</div>
+          </div>
+          <div class="lf-row">
+            <div class="lf-card" style="flex:1">
+              <div class="lf-card-label"></div>
+              <div class="lf-chart" style="height:70px">${[1,2,3,4].map(()=>`<div class="lf-bar" style="height:${40+Math.random()*60|0}%"></div>`).join('')}</div>
+              <div class="lf-annotation">sales by category</div>
+            </div>
+            <div class="lf-card" style="flex:1">
+              <div class="lf-card-label"></div>
+              ${[1,2,3].map(()=>`<div style="display:flex;gap:6px;margin-bottom:5px"><div class="lf-table-row" style="flex:2"></div><div class="lf-table-row" style="flex:1"></div></div>`).join('')}
+              <div class="lf-annotation">top customers by LTV</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+    hi:`<div class="hf-shell">
+      <div class="hf-sidebar">
+        <div class="hf-logo">Flowbiz</div>
+        <div class="hf-nav">${sidebar('reports')}</div>
+      </div>
+      <div class="hf-main">
+        <div class="hf-topbar">
+          <span style="font-size:12px;color:var(--color-text-secondary)">Business Owner</span>
+          <div class="hf-avatar" style="background:#533ab7">BO</div>
+        </div>
+        <div class="hf-content">
+          <div class="hf-page-title">Revenue reports</div>
+          <div style="display:flex;gap:10px;align-items:flex-end;margin-bottom:14px">
+            <div style="flex:1"><label style="font-size:11px;color:var(--color-text-secondary);display:block;margin-bottom:3px">From</label><input class="hf-input" type="date" value="2026-02-22" readonly></div>
+            <div style="flex:1"><label style="font-size:11px;color:var(--color-text-secondary);display:block;margin-bottom:3px">To</label><input class="hf-input" type="date" value="2026-03-24" readonly></div>
+            <button class="hf-btn-primary">Run report</button>
+            <button class="hf-btn-outline">Export CSV</button>
+          </div>
+          <div class="hf-card" style="margin-bottom:10px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:13px;font-weight:500">Net revenue — 30 days</span>
+              <span style="font-size:13px;font-weight:500;color:#0f6e56">KES 2,340,800 total</span>
+            </div>
+            <div class="hf-chart-bars" style="height:100px">${[55,70,40,85,65,50,80,35,70,55,90,45,60,75,50,85,65,40,80,60,70,45,90,55,75,60,85,50,70,65].map(h=>`<div class="hf-bar" style="height:${h}%;background:#185fa5;opacity:0.75"></div>`).join('')}</div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--color-text-tertiary);margin-top:4px"><span>22 Feb</span><span>24 Mar</span></div>
+          </div>
+          <div class="hf-row">
+            <div class="hf-card" style="flex:1">
+              <div style="font-size:13px;font-weight:500;margin-bottom:8px">By payment method</div>
+              <div class="hf-chart-bars" style="height:70px">
+                ${[['M-Pesa',85,'#185fa5'],['Cash',55,'#0f6e56'],['Credit',40,'#854f0b'],['Bank',25,'#993556']].map(([l,h,c])=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="height:${h}%;width:100%;background:${c};border-radius:3px 3px 0 0;opacity:.8"></div><span style="font-size:9px;color:var(--color-text-secondary)">${l}</span></div>`).join('')}
+              </div>
+            </div>
+            <div class="hf-card" style="flex:1">
+              <div style="font-size:13px;font-weight:500;margin-bottom:8px">Top customers</div>
+              ${[['Nairobi Gym','KES 84,000'],['ABC School','KES 72,400'],['Westlands Apt','KES 61,200']].map(([n,v])=>`
+              <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px">
+                <span>${n}</span><span style="font-weight:500">${v}</span>
+              </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+  receipts:{
+    lo:`<div class="lf-shell">
+      <div class="lf-side">${lf_sidebar('receipts')}</div>
+      <div class="lf-main">
+        <div class="lf-topbar"><div class="lf-tb-pill"></div><div class="lf-tb-pill" style="width:28px;height:28px;border-radius:50%"></div></div>
+        <div class="lf-content">
+          <div class="lf-page-title"></div>
+          <div class="lf-card">
+            <div class="lf-table-header" style="margin-bottom:8px"></div>
+            ${[1,2,3,4,5].map(()=>`<div style="display:flex;gap:8px;margin-bottom:6px;align-items:center">
+              ${[2,1,1,1,1,1].map(w=>`<div class="lf-table-row" style="flex:${w};height:10px"></div>`).join('')}
+              <div class="lf-btn" style="width:50px;height:18px"></div>
+              <div class="lf-btn" style="width:40px;height:18px;background:#888780"></div>
+            </div>`).join('')}
+          </div>
+          <div class="lf-annotation">columns: number, type, customer, amount, method, status + resend/void actions</div>
+        </div>
+      </div>
+    </div>`,
+    hi:`<div class="hf-shell">
+      <div class="hf-sidebar">
+        <div class="hf-logo">Flowbiz</div>
+        <div class="hf-nav">${sidebar('receipts')}</div>
+      </div>
+      <div class="hf-main">
+        <div class="hf-topbar">
+          <span style="font-size:12px;color:var(--color-text-secondary)">Sales Staff</span>
+          <div class="hf-avatar" style="background:#0f6e56">SS</div>
+        </div>
+        <div class="hf-content">
+          <div class="hf-page-title">Receipts</div>
+          <div class="hf-card">
+            <table class="hf-table">
+              <thead><tr><th>Receipt #</th><th>Type</th><th>Customer</th><th>Amount</th><th>Method</th><th>KRA</th><th>Actions</th></tr></thead>
+              <tbody>
+                ${[['RCP-20260324-0042','payment','Nairobi Gym','KES 4,500','mpesa','accepted'],
+                   ['RCP-20260324-0041','payment','Walk-in','KES 800','cash','not_submitted'],
+                   ['DEP-20260324-0008','deposit','Westlands Apt','KES 1,500','cash','not_required'],
+                   ['RCP-20260323-0039','payment','ABC School','KES 6,400','bank_transfer','accepted'],
+                   ['RFD-20260323-0003','refund','Walk-in','KES 350','cash','not_required']
+                  ].map(([num,type,c,amt,m,kra])=>`<tr>
+                  <td style="font-family:var(--font-mono);font-size:10px">${num}</td>
+                  <td><span class="badge badge-${type==='payment'?'info':type==='deposit'?'warning':'secondary'}">${type}</span></td>
+                  <td>${c}</td>
+                  <td style="font-weight:500">${amt}</td>
+                  <td><span class="badge badge-secondary">${m}</span></td>
+                  <td><span class="badge badge-${kra==='accepted'?'success':kra==='not_submitted'?'warning':'secondary'}" style="font-size:9px">${kra.replace('_',' ')}</span></td>
+                  <td style="display:flex;gap:4px">
+                    <button style="font-size:10px;padding:2px 6px;border:0.5px solid var(--color-border-secondary);border-radius:4px;background:transparent;cursor:pointer;color:var(--color-text-primary)">Resend</button>
+                  </td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+  pos:{
+    lo:`<div class="lf-shell">
+      <div class="lf-side">${lf_sidebar('purchase orders')}</div>
+      <div class="lf-main">
+        <div class="lf-topbar"><div class="lf-tb-pill"></div><div class="lf-tb-pill" style="width:28px;height:28px;border-radius:50%"></div></div>
+        <div class="lf-content">
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+            <div class="lf-page-title" style="margin:0"></div>
+            <div class="lf-btn"></div>
+          </div>
+          <div class="lf-annotation" style="margin-bottom:10px">"New PO" button (po.create permission) — approve/decline buttons (po.approve permission)</div>
+          <div class="lf-card">
+            <div class="lf-table-header" style="margin-bottom:8px"></div>
+            ${[1,2,3,4].map(()=>`<div style="display:flex;gap:8px;margin-bottom:6px;align-items:center">
+              ${[1,2,1,1,1,1].map(w=>`<div class="lf-table-row" style="flex:${w};height:10px"></div>`).join('')}
+              <div class="lf-btn" style="width:55px;height:18px;background:#888780"></div>
+              <div class="lf-btn" style="width:55px;height:18px"></div>
+            </div>`).join('')}
+          </div>
+          <div class="lf-annotation">columns: PO#, supplier, amount, status, expected delivery + approve/decline</div>
+        </div>
+      </div>
+    </div>`,
+    hi:`<div class="hf-shell">
+      <div class="hf-sidebar">
+        <div class="hf-logo">Flowbiz</div>
+        <div class="hf-nav">${sidebar('purchase orders')}</div>
+      </div>
+      <div class="hf-main">
+        <div class="hf-topbar">
+          <span style="font-size:12px;color:var(--color-text-secondary)">Business Owner</span>
+          <div class="hf-avatar" style="background:#533ab7">BO</div>
+        </div>
+        <div class="hf-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div class="hf-page-title" style="margin:0">Purchase orders</div>
+            <button class="hf-btn-primary">+ New PO</button>
+          </div>
+          <div class="hf-card">
+            <table class="hf-table">
+              <thead><tr><th>PO #</th><th>Supplier</th><th>Total</th><th>Status</th><th>Expected</th><th>Actions</th></tr></thead>
+              <tbody>
+                ${[['PO-0041','AquaSource Ltd','KES 45,000','pending_approval','28 Mar 2026'],
+                   ['PO-0040','PackRight Co','KES 12,400','approved','25 Mar 2026'],
+                   ['PO-0039','AquaSource Ltd','KES 38,000','received','20 Mar 2026'],
+                   ['PO-0038','CleanCap Supplies','KES 8,200','declined','—']
+                  ].map(([po,s,t,status,exp])=>`<tr>
+                  <td style="font-family:var(--font-mono);font-size:10px">${po}</td>
+                  <td style="font-weight:500">${s}</td>
+                  <td style="font-weight:500">${t}</td>
+                  <td><span class="badge badge-${status==='approved'||status==='received'?'success':status==='pending_approval'?'warning':status==='declined'?'danger':'info'}">${status.replace('_',' ')}</span></td>
+                  <td style="color:var(--color-text-secondary)">${exp}</td>
+                  <td>${status==='pending_approval'?`<div style="display:flex;gap:4px">
+                    <button class="hf-btn-primary" style="padding:3px 8px;font-size:10px">Approve</button>
+                    <button class="hf-btn-outline" style="padding:3px 8px;font-size:10px;color:#a32d2d">Decline</button>
+                  </div>`:''}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`
+  }
+};
+
+function showPage(page){
+  currentPage = page;
+  document.querySelectorAll('.page-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.toLowerCase().replace(' ','')===page||b.textContent.toLowerCase()===page);
+  });
+  render();
+}
+
+function setFidelity(f){
+  currentFidelity = f;
+  document.querySelectorAll('.toggle button').forEach((b,i)=>{
+    b.classList.toggle('active',(i===0&&f==='lo')||(i===1&&f==='hi'));
+  });
+  render();
+}
+
+function render(){
+  const p = pages[currentPage];
+  document.getElementById('wireframe-area').innerHTML = p ? p[currentFidelity] : '';
+}
+
+render();
+</script>

@@ -1,7 +1,7 @@
 // frontend/src/pages/Inventory.jsx
 import { Table, Badge, Spinner, Alert, Button } from 'react-bootstrap'
 import { useApi }        from '../hooks/useApi'
-import { usePermission } from '../hooks/usePermissions'
+import { usePermission } from '../hooks/usePermission'
 import { inventoryApi }  from '../api/inventory'
 import StatusBadge       from '../components/common/StatusBadge'
 

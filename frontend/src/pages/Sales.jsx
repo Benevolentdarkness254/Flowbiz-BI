@@ -2,7 +2,7 @@
 import { useState }    from 'react'
 import { Table, Button, Badge, Spinner, Alert } from 'react-bootstrap'
 import { useApi }      from '../hooks/useApi'
-import { usePermission } from '../hooks/usePermissions'
+import { usePermission } from '../hooks/usePermission'
 import { salesApi }    from '../api/sales'
 import StatusBadge     from '../components/common/StatusBadge'
 

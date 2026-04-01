@@ -9,6 +9,7 @@ import Dashboard        from './pages/Dashboard'
 import Sales            from './pages/Sales'
 import Inventory        from './pages/Inventory'
 import Reports          from './pages/Reports'
+import Customers        from './pages/Customers'
 
 export default function App() {
   return (
@@ -41,41 +42,13 @@ export default function App() {
                 <Inventory />
               </ProtectedRoute>
             } />
-
-            <Route path="purchase-orders" element={
-              <ProtectedRoute permission="po.view"><PurchaseOrders /></ProtectedRoute>
-            } />
-
-            <Route path="receipts" element={
-              <ProtectedRoute permission="receipt.view"><Receipts /></ProtectedRoute>
-            } />
-
+            
             <Route path="reports" element={
               <ProtectedRoute permission="report.view">
                 <Reports />
               </ProtectedRoute>
             } />
-            
-            <Route path="deliveries" element={
-              <ProtectedRoute permission="delivery.view"><Deliveries /></ProtectedRoute>
-            } />
-
-             <Route path="system/logs" element={
-              <ProtectedRoute permission="system.logs"><SystemLogs /></ProtectedRoute>
-            } />
-
-            <Route path="system/audit" element={
-              <ProtectedRoute permission="system.audit"><AuditTrail /></ProtectedRoute>
-            } />
-
-            <Route path="system/backups" element={
-              <ProtectedRoute permission="system.backup"><Backups /></ProtectedRoute>
-            } />
-
-            <Route path="settings" element={
-              <ProtectedRoute permission="system.config"><Settings /></ProtectedRoute>
-            } />
-
+             
             {/* 403 page */}
             <Route path="403" element={
               <div className="text-center py-5">
@@ -83,7 +56,7 @@ export default function App() {
                 <p>You do not have permission to view this page.</p>
               </div>
             } />
-
+            
             {/* 404 catch-all */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

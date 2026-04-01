@@ -25,6 +25,10 @@ def require_permission(key: str):
             if not user or not user.is_active:
                 return jsonify(error="User not found or deactivated"), 401
 
+            # System admins implicitly have ALL permissions
+            if user.role and user.role.role_name == "system_admin":
+                return fn(*args, **kwargs)
+
             # Get fresh permissions from the user's role
             permissions = user.get_permissions()
             if key not in permissions:

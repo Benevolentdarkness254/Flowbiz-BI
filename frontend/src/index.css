@@ -55,14 +55,8 @@ body {
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  width: 100%;
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
   box-sizing: border-box;
 }
 
@@ -108,4 +102,40 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* ── Sidebar navigation styling ─────────────────────────────── */
+.nav-link-custom {
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+/* Hover state for inactive items */
+.nav-link-custom:not(.active):hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff !important;
+}
+
+/* Active item — handled by NavLink, but reinforce here */
+.nav-link-custom.active {
+  background: rgba(13, 110, 253, 0.25) !important;
+  border-left: 3px solid #0d6efd !important;
+  color: #fff !important;
+}
+
+/* Icon container — keeps SVG aligned with text */
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.nav-icon svg {
+  width: 18px;
+  height: 18px;
 }

@@ -1,7 +1,7 @@
 // frontend/src/components/common/ProtectedRoute.jsx
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { usePermission } from '../../hooks/usePermissions'
+import { usePermission } from '../../hooks/usePermission'
 
 /**
  * Wraps a route. If no user, redirects to /login.

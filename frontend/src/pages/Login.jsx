@@ -1,12 +1,14 @@
 // frontend/src/pages/Login.jsx
 import { useState }        from 'react'
 import { useNavigate }     from 'react-router-dom'
-import { Container, Card, Form, Button, Alert } from 'react-bootstrap'
+import { Container, Card, Form, Button, Alert, InputGroup } from 'react-bootstrap'
 import { useAuth }         from '../context/AuthContext'
+import { Eye, EyeSlash }   from 'react-bootstrap-icons'
 
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error,    setError]    = useState('')
   const [loading,  setLoading]  = useState(false)
   const { login }               = useAuth()
@@ -38,7 +40,20 @@ export default function Login() {
           </Form.Group>
           <Form.Group className="mb-4">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <InputGroup>
+              <Form.Control
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ borderLeft: 'none' }}
+              >
+                {showPassword ? <EyeSlash /> : <Eye />}
+              </Button>
+            </InputGroup>
           </Form.Group>
           <Button type="submit" className="w-100" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign in'}

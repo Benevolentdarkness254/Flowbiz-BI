@@ -1,6 +1,6 @@
 // frontend/src/pages/Dashboard.jsx
 import { Row, Col, Alert }  from 'react-bootstrap'
-import { usePermission }    from '../hooks/usePermissions'
+import { usePermission }    from '../hooks/usePermission'
 import { useApi }           from '../hooks/useApi'
 import { biApi }            from '../api/bi'
 import { inventoryApi }     from '../api/inventory'

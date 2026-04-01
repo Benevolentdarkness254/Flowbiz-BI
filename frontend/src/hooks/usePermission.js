@@ -15,16 +15,21 @@ import { AuthContext } from '../context/AuthContext'
  * that should also see reports, you have to change UI code.
  * Permission keys never change — only role-to-permission mappings change,
  * and those live in the database.
+ *
+ * System administrators implicitly have ALL permissions — this is enforced
+ * here so the UI renders correctly for them without needing every permission
+ * explicitly assigned in the database.
  */
 export function usePermission() {
-  const { permissions } = useContext(AuthContext)
+  const { user, permissions } = useContext(AuthContext)
+  const isSystemAdmin = user?.role === 'system_admin'
 
   return {
-    // check one permission
-    can:    (key)  => permissions.includes(key),
+    // check one permission — system admins always pass
+    can:    (key)  => isSystemAdmin || permissions.includes(key),
     // check if user has ANY of the listed permissions
-    canAny: (keys) => keys.some(k => permissions.includes(k)),
+    canAny: (keys) => isSystemAdmin || keys.some(k => permissions.includes(k)),
     // check if user has ALL of the listed permissions
-    canAll: (keys) => keys.every(k => permissions.includes(k)),
+    canAll: (keys) => isSystemAdmin || keys.every(k => permissions.includes(k)),
   }
 }
