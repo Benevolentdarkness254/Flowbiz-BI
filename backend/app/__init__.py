@@ -30,6 +30,9 @@ def create_app(config: str = "config.settings.Config") -> Flask:
     from .api.receipts import receipts_bp
     from .api.bi import bi_bp
     from .api.purchase_orders import po_bp
+    from .api.system import system_bp
+    from .api.deliveries import deliveries_bp
+    from .api.suppliers import suppliers_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(sales_bp, url_prefix="/api/sales")
@@ -37,6 +40,9 @@ def create_app(config: str = "config.settings.Config") -> Flask:
     app.register_blueprint(bi_bp, url_prefix="/api/bi")
     app.register_blueprint(receipts_bp, url_prefix="/api/receipts")
     app.register_blueprint(po_bp, url_prefix="/api/purchase-orders")
+    app.register_blueprint(system_bp, url_prefix="/api/system")
+    app.register_blueprint(deliveries_bp, url_prefix="/api/deliveries")
+    app.register_blueprint(suppliers_bp, url_prefix="/api/suppliers")
 
     register_commands(app)
 

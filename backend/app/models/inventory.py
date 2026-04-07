@@ -1,7 +1,12 @@
 from datetime import datetime
 from sqlalchemy import Index
 from app.extensions import db
-from app.models.enums import ProductCategory, StockMovementType, SupplierType
+from app.models.enums import (
+    ProductCategory,
+    StockMovementType,
+    SupplierType,
+    SupplierApprovalStatus,
+)
 
 
 class Supplier(db.Model):
@@ -17,6 +22,21 @@ class Supplier(db.Model):
     payment_terms = db.Column(db.Integer, default=30)  # net days
     is_active = db.Column(db.Boolean, default=True)
     address = db.Column(db.Text)
+    # Contract fields
+    contract_start = db.Column(db.Date)
+    contract_end = db.Column(db.Date)
+    goods_dealt_with = db.Column(db.Text)  # comma-separated or description
+    notes = db.Column(db.Text)
+    # Approval workflow
+    approval_status = db.Column(
+        db.Enum(
+            SupplierApprovalStatus, values_callable=lambda obj: [e.value for e in obj]
+        ),
+        default=SupplierApprovalStatus.PENDING,
+    )
+    approved_by = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    approved_at = db.Column(db.DateTime)
+    rejection_reason = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow

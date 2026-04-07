@@ -94,8 +94,186 @@ def create_user_route():
         return jsonify(errors=e.messages), 400
 
     try:
+        # Map 'phone' from the schema to 'phone_number' expected by the service
+        phone = data.pop("phone", None)
+        if phone:
+            data["phone_number"] = phone
         user = create_user(**data)
     except ValueError as e:
         return jsonify(error=str(e)), 422
 
     return jsonify(user=user_schema.dump(user)), 201
+
+
+@auth_bp.get("/users")
+@require_permission("user.view")
+def list_users():
+    """
+    List all active users with their roles.
+    System admins can see deleted users too via ?include_deleted=true.
+    """
+    include_deleted = request.args.get("include_deleted", "false").lower() == "true"
+
+    query = User.query
+    if not include_deleted:
+        query = query.filter_by(deleted_at=None)
+
+    users = query.order_by(User.created_at.desc()).all()
+    return jsonify(
+        users=[user_schema.dump(u) for u in users],
+        total=len(users),
+    )
+
+
+@auth_bp.get("/users/<int:user_id>")
+@require_permission("user.view")
+def get_user(user_id):
+    """Get a single user by ID."""
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify(error="User not found"), 404
+    return jsonify(user=user_schema.dump(user))
+
+
+@auth_bp.put("/users/<int:user_id>")
+@require_permission("user.edit")
+def update_user(user_id):
+    """
+    Update a user's profile fields.
+    Admins can change: full_name, email, phone, role, is_active, password.
+    Cannot edit own role or deactivate own account (prevents lockout).
+    """
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify(error="User not found"), 404
+
+    current_user_id = int(get_jwt_identity())
+    data = request.get_json() or {}
+
+    # Prevent self-role-change and self-deactivation
+    if user.user_id == current_user_id:
+        if "role_name" in data:
+            return jsonify(error="You cannot change your own role"), 403
+        if "is_active" in data and not data["is_active"]:
+            return jsonify(error="You cannot deactivate your own account"), 403
+
+    # Update fields if provided
+    if "full_name" in data:
+        user.full_name = data["full_name"]
+    if "email" in data:
+        # Check uniqueness
+        existing = User.query.filter_by(email=data["email"]).first()
+        if existing and existing.user_id != user_id:
+            return jsonify(error="Email already in use"), 422
+        user.email = data["email"]
+    if "phone" in data:
+        user.phone = data["phone"]
+    if "is_active" in data:
+        user.is_active = bool(data["is_active"])
+    if "password" in data and data["password"]:
+        from werkzeug.security import generate_password_hash
+
+        if len(data["password"]) < 8:
+            return jsonify(error="Password must be at least 8 characters"), 400
+        user.password_hash = generate_password_hash(data["password"])
+    if "role_name" in data:
+        from app.models.auth import Role
+
+        role = Role.query.filter_by(role_name=data["role_name"]).first()
+        if not role:
+            return jsonify(error=f"Role '{data['role_name']}' does not exist"), 422
+        user.role_id = role.role_id
+
+    db.session.commit()
+    return jsonify(user=user_schema.dump(user))
+
+
+@auth_bp.delete("/users/<int:user_id>")
+@require_permission("user.delete")
+def delete_user(user_id):
+    """
+    Soft-delete a user by setting deleted_at timestamp.
+    Cannot delete your own account (prevents lockout).
+    """
+    from datetime import datetime
+
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify(error="User not found"), 404
+
+    current_user_id = int(get_jwt_identity())
+    if user.user_id == current_user_id:
+        return jsonify(error="You cannot delete your own account"), 403
+
+    if user.deleted_at:
+        return jsonify(error="User is already deleted"), 404
+
+    user.deleted_at = datetime.utcnow()
+    db.session.commit()
+    return jsonify(message=f"User '{user.username}' has been deactivated")
+
+
+@auth_bp.post("/users/<int:user_id>/restore")
+@require_permission("user.edit")
+def restore_user(user_id):
+    """Restore a soft-deleted user by clearing deleted_at."""
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify(error="User not found"), 404
+    if not user.deleted_at:
+        return jsonify(error="User is not deleted"), 400
+
+    user.deleted_at = None
+    db.session.commit()
+    return jsonify(
+        message=f"User '{user.username}' has been restored", user=user_schema.dump(user)
+    )
+
+
+@auth_bp.get("/roles")
+@require_permission("user.view")
+def list_roles():
+    """Return all available roles for the user creation/edit dropdown."""
+    from app.models.auth import Role
+
+    roles = Role.query.filter_by(is_active=True).order_by(Role.role_name).all()
+    return jsonify(
+        roles=[
+            {
+                "role_id": r.role_id,
+                "role_name": r.role_name,
+                "description": r.description,
+            }
+            for r in roles
+        ]
+    )
+
+
+@auth_bp.get("/permissions/debug")
+@require_permission("system.config")
+def debug_permissions():
+    """
+    Admin-only diagnostic endpoint.
+    Returns every role with its actual permissions for debugging.
+    """
+    from app.models.auth import Role
+    from app.services.permission_service import validate_permissions
+
+    roles_data = []
+    for role in Role.query.order_by(Role.role_name).all():
+        perm_keys = [p.permission_key for p in role.permissions]
+        roles_data.append(
+            {
+                "role_id": role.role_id,
+                "role_name": role.role_name,
+                "permission_count": len(perm_keys),
+                "permissions": sorted(perm_keys),
+            }
+        )
+
+    validation = validate_permissions()
+
+    return jsonify(
+        roles=roles_data,
+        validation=validation,
+    )
