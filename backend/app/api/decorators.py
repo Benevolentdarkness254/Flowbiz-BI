@@ -14,22 +14,20 @@ def require_permission(key: str):
     It wraps @jwt_required() so you only need one decorator per route.
     Unlike the previous version that stored permissions in JWT (which could become stale),
     this decorator fetches fresh permissions from the database on each request.
+
+    Note: system_admin no longer has implicit access to business functions.
+    Only permissions explicitly assigned via ROLE_PERMISSION_MAP grant access.
     """
 
     def decorator(fn):
         @wraps(fn)
         @jwt_required()
         def wrapper(*args, **kwargs):
-            user_id = int(get_jwt_identity())  # Convert string user_id back to int
+            user_id = int(get_jwt_identity())
             user = db.session.get(User, user_id)
             if not user or not user.is_active:
                 return jsonify(error="User not found or deactivated"), 401
 
-            # System admins implicitly have ALL permissions
-            if user.role and user.role.role_name == "system_admin":
-                return fn(*args, **kwargs)
-
-            # Get fresh permissions from the user's role
             permissions = user.get_permissions()
             if key not in permissions:
                 return jsonify(

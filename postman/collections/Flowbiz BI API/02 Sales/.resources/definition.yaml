@@ -1,0 +1,10 @@
+$kind: collection
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Folder-level: Sales — runs after every request in 02 Sales
+      // Protected endpoints must never return 500
+      pm.test('Sales endpoint does not return a server error (5xx)', function () {
+          pm.expect(pm.response.code).to.be.below(500);
+      });

@@ -1,0 +1,21 @@
+$kind: http-request
+name: Logout
+order: 2000
+method: POST
+url: '{{baseURL}}/api/auth/logout'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Logout ────────────────────────────────────────────────────────────
+      pm.test('Logout returns 200 or 204', function () {
+          pm.expect([200, 204]).to.include(pm.response.code);
+      });
+
+      pm.test('Logout response contains a message or is empty', function () {
+          if (pm.response.code === 200) {
+              var json = pm.response.json();
+              pm.expect(json).to.have.property('message');
+          }
+          // 204 has no body — that is fine
+      });

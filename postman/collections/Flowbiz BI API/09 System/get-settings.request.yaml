@@ -1,0 +1,29 @@
+$kind: http-request
+name: Get System Settings
+order: 6000
+method: GET
+url: '{{baseURL}}/api/system/settings'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Get System Settings ───────────────────────────────────────────────
+      pm.test('Get Settings returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Settings response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('Settings has company_name or currency field', function () {
+              var json = pm.response.json();
+              var settings = json.settings || json;
+              var hasField = settings.hasOwnProperty('company_name') ||
+                             settings.hasOwnProperty('currency') ||
+                             settings.hasOwnProperty('tax_rate');
+              pm.expect(hasField).to.be.true;
+          });
+      }

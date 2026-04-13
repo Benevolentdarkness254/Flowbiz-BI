@@ -1,0 +1,11 @@
+$kind: collection
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Folder-level: Auth — runs after every request in 01 Auth
+      // Acceptable status codes for auth endpoints
+      var ok = [200, 201, 400, 401, 403, 404, 409, 422];
+      pm.test('Auth response has an expected HTTP status code', function () {
+          pm.expect(ok).to.include(pm.response.code);
+      });

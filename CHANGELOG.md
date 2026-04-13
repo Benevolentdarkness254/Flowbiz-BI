@@ -1,5 +1,106 @@
 # FlowBiz BI — Implementation Changelog
 
+## Date: April 12, 2026 (Admin UI Fix — Permission Model Enforcement)
+
+### Summary
+Fixed admin dashboard and sidebar to comply with the new permission model where `system_admin` only has technical permissions (user.*, system.*). The admin UI was showing broken/inaccessible business metrics (KRA pending, stock alerts, pending POs, deliveries) because the system_admin role no longer has business permissions. Also ran `flask seed-permissions` to ensure role-permission mappings are synchronized, and rebuilt the frontend.
+
+**Important:** After any permission_service.py changes, you must run `flask seed-permissions` to sync the database. The sidebar may appear empty if permissions are not seeded.
+
+---
+
+### What Was Broken
+After the permission model change that restricted `system_admin` to only technical permissions, the admin dashboard continued to display:
+- KRA Pending count (requires `report.view`)
+- Stock Alerts count (requires `inventory.view`)
+- Pending POs count (requires `po.view`)
+- Active Deliveries count (requires `delivery.view`)
+- Stock Alert list at bottom (requires `inventory.view`)
+
+These showed as 0 or empty, making the dashboard look broken.
+
+---
+
+### Fix Applied
+
+#### `frontend/src/pages/Dashboard.jsx` — Admin Dashboard Section
+**What changed:** Removed business metrics from admin dashboard. The admin view now only shows:
+- Database Size
+- Active Users / Total Users
+- Errors (24h)
+- Recent Logins (7d)
+- User Roles Distribution chart
+- Audit Activity chart
+- Database Table Sizes chart
+
+Removed metrics that require business permissions:
+- KRA Pending
+- Stock Alerts
+- Pending POs
+- Active Deliveries
+- Stock Alert List
+
+Also added an info alert explaining that business metrics are available to users with business permissions.
+
+---
+
+### Sidebar Navigation (Unaffected)
+The sidebar correctly shows only: Dashboard, Audit Trail, Backups, Users, Settings for system_admin — matching the technical permission set.
+
+---
+
+## Date: April 12, 2026 (Audit Trail UI & Login Tracking)
+
+### Summary
+Completely redesigned the Audit Trail page for better readability and added login/logout tracking to the audit log. Login events are now recorded in the audit trail so admins can see user login history.
+
+---
+
+### Changes Made
+
+#### `frontend/src/pages/AuditTrail.jsx` — Complete rewrite
+**What changed:**
+- Replaced nested `<tbody>` structure (invalid HTML) with a clean single-table layout
+- Added tabbed interface: "System Changes" and "Login Activity"
+- Added time range filter (Today, Last 7 Days, Last 30 Days, All Time)
+- Added table and action filters
+- Used cards with shadow for filter controls instead of plain form controls
+- Changed action display to use colored badges with icons (➕✏️🗑️🔓🔒)
+- Added inline expandable diff view for changed fields
+- Shows record count in tab titles
+- Overall more polished, readable presentation
+
+#### `backend/app/api/auth.py` — Added login/logout audit logging
+**What changed:**
+- Added `_log_audit()` helper function to write entries to `audit_log` table
+- Login events now write to `audit_log` with `action='login'`, `table_name='users'`, and user details
+- Logout events now write to `audit_log` with `action='logout'`
+- Captures IP address from `X-Forwarded-For` header or `request.remote_addr`
+
+**Why:** Without login tracking, there was no way to see who logged in and when. Now login/logout events appear in the Audit Trail page under the "Login Activity" tab.
+
+---
+
+## Date: April 12, 2026 (Bug Fix: Customer Creation Blank Screen)
+
+### Summary
+Fixed an issue where creating a new customer caused a blank screen after form submission. The bug was in the `CustomerSchema` serialization — the `customer_type` Enum was being serialized as `'CustomerType.WALK_IN'` instead of `'walk_in'`, causing the frontend to crash when rendering the customer list.
+
+### Root Cause
+The `CustomerSchema` explicitly defined `customer_type = fields.Str(load_default="walk_in")`, which overrode marshmallow's auto-serialization. When dumping, marshmallow converted the Enum using its `__str__` method (producing `'CustomerType.WALK_IN'`) instead of the Enum's `.value` property.
+
+### Fix Applied
+
+#### `backend/app/schemas/sales.py` — CustomerSchema
+**What changed:**
+- Added `post_dump` import from marshmallow
+- Replaced `get_customer_type()` method with `@post_dump` hook that converts `customer_type` values like `'CustomerType.WALK_IN'` to `'walk_in'`
+
+**Before:** `customer_type: 'CustomerType.WALK_IN'` (breaks frontend)
+**After:** `customer_type: 'walk_in'` (correct)
+
+---
+
 ## Date: April 7, 2026 (Supplier Management System)
 
 ### Summary

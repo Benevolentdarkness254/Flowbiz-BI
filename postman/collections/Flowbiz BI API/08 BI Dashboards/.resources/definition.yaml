@@ -1,0 +1,15 @@
+$kind: collection
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Folder-level: BI Dashboards — runs after every request in 08 BI Dashboards
+      // BI endpoints are read-only; they should always succeed when authenticated
+      pm.test('BI Dashboard endpoint does not return a server error (5xx)', function () {
+          pm.expect(pm.response.code).to.be.below(500);
+      });
+
+      // BI responses should be fast (under 3 seconds) since they are read-only
+      pm.test('BI Dashboard response time is under 3000 ms', function () {
+          pm.expect(pm.response.responseTime).to.be.below(3000);
+      });

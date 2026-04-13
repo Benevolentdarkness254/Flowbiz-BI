@@ -1,0 +1,9 @@
+$kind: collection
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Folder-level: Receipts — runs after every request in 07 Receipts
+      pm.test('Receipts endpoint does not return a server error (5xx)', function () {
+          pm.expect(pm.response.code).to.be.below(500);
+      });

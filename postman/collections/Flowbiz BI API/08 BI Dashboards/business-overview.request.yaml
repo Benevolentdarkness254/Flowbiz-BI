@@ -1,0 +1,38 @@
+$kind: http-request
+name: Business Overview
+order: 9000
+method: GET
+url: '{{baseURL}}/api/bi/overview'
+queryParams:
+  - key: start_date
+    value: '2025-07-01'
+    description: 'Start date (YYYY-MM-DD). Defaults to 30 days ago.'
+    disabled: true
+  - key: end_date
+    value: '2025-07-31'
+    description: 'End date (YYYY-MM-DD). Defaults to today.'
+    disabled: true
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Business Overview ─────────────────────────────────────────────────
+      pm.test('Business Overview returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Business overview response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('Business overview has at least one summary metric', function () {
+              var json = pm.response.json();
+              var hasMetric = json.hasOwnProperty('total_revenue') ||
+                              json.hasOwnProperty('total_sales') ||
+                              json.hasOwnProperty('total_orders') ||
+                              json.hasOwnProperty('revenue');
+              pm.expect(hasMetric).to.be.true;
+          });
+      }

@@ -1,0 +1,30 @@
+$kind: http-request
+name: Supplier Pricing for PO
+order: 6000
+method: GET
+url: '{{baseURL}}/api/inventory/suppliers/{{testSupplierId}}/pricing'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Supplier Pricing for PO ───────────────────────────────────────────
+      pm.test('Supplier Pricing returns 200, 401, 403, or 404', function () {
+          pm.expect([200, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Pricing response is an array or object', function () {
+              var json = pm.response.json();
+              var isArrayOrObject = Array.isArray(json) || typeof json === 'object';
+              pm.expect(isArrayOrObject).to.be.true;
+          });
+
+          pm.test('Each pricing entry has product_id and unit_price', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.pricing || json.data);
+              if (Array.isArray(list) && list.length > 0) {
+                  pm.expect(list[0]).to.have.property('product_id');
+                  pm.expect(list[0]).to.have.property('unit_price');
+              }
+          });
+      }

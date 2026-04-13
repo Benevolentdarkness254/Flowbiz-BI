@@ -1,0 +1,27 @@
+$kind: http-request
+name: Reinstate Supplier
+order: 9000
+method: POST
+url: '{{baseURL}}/api/suppliers/{{testSupplierId}}/reinstate'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Reinstate Supplier ────────────────────────────────────────────────
+      pm.test('Reinstate Supplier returns 200, 400, 401, 403, or 404', function () {
+          pm.expect([200, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Reinstate response has message or supplier field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.supplier).to.exist;
+          });
+      }
+
+      if (pm.response.code === 400) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

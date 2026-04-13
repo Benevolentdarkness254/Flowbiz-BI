@@ -1,0 +1,38 @@
+$kind: http-request
+name: List Users
+order: 4000
+method: GET
+url: '{{baseURL}}/api/auth/users'
+queryParams:
+  - key: include_deleted
+    value: 'false'
+    description: 'Set to true to include soft-deleted users (system_admin only)'
+    disabled: true
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── List Users ────────────────────────────────────────────────────────
+      // Requires admin/manager role; returns 401/403 when not authorised.
+      pm.test('List Users returns 200 (authorised) or 401/403 (not authorised)', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Users list is an array', function () {
+              var json = pm.response.json();
+              // API may return { users: [...] } or a bare array
+              var list = Array.isArray(json) ? json : json.users;
+              pm.expect(list).to.be.an('array');
+          });
+
+          pm.test('Each user has id, username, and role fields', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : json.users;
+              if (list.length > 0) {
+                  pm.expect(list[0]).to.have.property('id');
+                  pm.expect(list[0]).to.have.property('username');
+                  pm.expect(list[0]).to.have.property('role');
+              }
+          });
+      }

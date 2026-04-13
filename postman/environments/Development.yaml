@@ -1,0 +1,50 @@
+name: Flowbiz - Development
+values:
+  - key: baseURL
+    value: 'http://localhost:5000'
+    enabled: true
+    type: default
+  - key: authCookie
+    value: ''
+    enabled: true
+    type: default
+  - key: testUsername
+    value: admin
+    enabled: true
+    type: default
+  - key: testPassword
+    value: changeme123
+    enabled: true
+    type: default
+  - key: testUserId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testSupplierId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testProductId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testTransactionId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testDeliveryId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testReceiptId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testPoId
+    value: '1'
+    enabled: true
+    type: default
+  - key: testCustomerId
+    value: '1'
+    enabled: true
+    type: default

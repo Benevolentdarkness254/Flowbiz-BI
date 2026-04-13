@@ -504,7 +504,7 @@ def get_hr_analytics() -> dict:
         """)
     ).fetchall()
 
-    # Sales staff performance
+    # Sales staff performance (only roles with sale.create permission)
     staff_perf = db.session.execute(
         text("""
             SELECT u.full_name, u.username,
@@ -515,7 +515,7 @@ def get_hr_analytics() -> dict:
             LEFT JOIN sale_transactions st ON st.sales_staff_id = u.user_id
               AND st.payment_status != 'cancelled'
               AND DATE(st.transaction_date) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-            WHERE u.role_id IN (SELECT role_id FROM roles WHERE role_name IN ('sales_staff', 'system_admin'))
+            WHERE u.role_id IN (SELECT role_id FROM roles WHERE role_name IN ('sales_staff', 'business_owner'))
               AND u.is_active = 1
             GROUP BY u.full_name, u.username
             ORDER BY total_revenue DESC

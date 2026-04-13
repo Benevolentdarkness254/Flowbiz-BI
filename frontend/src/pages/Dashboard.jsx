@@ -45,6 +45,9 @@ export default function Dashboard() {
 
   // ============================================================
   // ADMIN DASHBOARD — System health + IT metrics with charts
+  // Note: Admin (system_admin role) only has technical permissions
+  // (user.*, system.*). Business metrics (sales, inventory, POs, etc.)
+  // are hidden since they require business permissions.
   // ============================================================
   if (isAdmin) {
     const health = adminDash?.system_health || {}
@@ -56,7 +59,7 @@ export default function Dashboard() {
       <div>
         <h5 className="mb-4">Admin Dashboard</h5>
 
-        {/* System Health Panel */}
+        {/* System Health Panel — only system-level metrics */}
         <Card className="mb-4">
           <Card.Header className="bg-dark text-white"><strong>System Health</strong></Card.Header>
           <Card.Body>
@@ -65,12 +68,6 @@ export default function Dashboard() {
               <Col md={3}><StatCard title="Active Users" value={`${health.active_users || 0} / ${health.total_users || 0}`} variant="primary" /></Col>
               <Col md={3}><StatCard title="Errors (24h)" value={health.errors_24h || 0} variant={health.errors_24h > 0 ? 'danger' : 'success'} /></Col>
               <Col md={3}><StatCard title="Recent Logins (7d)" value={health.recent_logins_7d || 0} variant="success" /></Col>
-            </Row>
-            <Row className="g-3 mt-2">
-              <Col md={3}><StatCard title="KRA Pending" value={health.kra_pending || 0} variant={health.kra_pending > 0 ? 'warning' : 'success'} /></Col>
-              <Col md={3}><StatCard title="Stock Alerts" value={health.stock_alerts || 0} variant={health.stock_alerts > 0 ? 'warning' : 'success'} /></Col>
-              <Col md={3}><StatCard title="Pending POs" value={health.pending_pos || 0} variant={health.pending_pos > 0 ? 'warning' : 'success'} /></Col>
-              <Col md={3}><StatCard title="Active Deliveries" value={health.active_deliveries || 0} variant="info" /></Col>
             </Row>
           </Card.Body>
         </Card>
@@ -130,14 +127,10 @@ export default function Dashboard() {
           </Card>
         )}
 
-        {/* Stock Alert List */}
-        {can('inventory.view') && alertData?.alerts.length > 0 && (
-          <Alert variant="warning">
-            <strong>Low Stock:</strong>{' '}
-            {alertData.alerts.slice(0, 3).map(a => a.product_name).join(', ')}
-            {alertData.alerts.length > 3 && ` and ${alertData.alerts.length - 3} more`}
-          </Alert>
-        )}
+        {/* Business metrics note */}
+        <Alert variant="info" className="mt-3">
+          <strong>Note:</strong> Business metrics (revenue, transactions, stock alerts, pending POs, deliveries) are available to users with business permissions (owner, sales staff, inventory staff, drivers).
+        </Alert>
       </div>
     )
   }

@@ -1,0 +1,36 @@
+$kind: http-request
+name: Decline Purchase Order
+order: 4000
+method: POST
+url: '{{baseURL}}/api/purchase-orders/{{testPurchaseOrderId}}/decline'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "reason": "Budget exceeded for this quarter"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Decline Purchase Order ────────────────────────────────────────────
+      pm.test('Decline PO returns 200, 400, 401, 403, or 404', function () {
+          pm.expect([200, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Decline PO response has message or purchase_order field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.purchase_order).to.exist;
+          });
+      }
+
+      if (pm.response.code === 400) {
+          pm.test('Cannot decline error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

@@ -1,0 +1,9 @@
+$kind: collection
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Folder-level: Inventory — runs after every request in 03 Inventory
+      pm.test('Inventory endpoint does not return a server error (5xx)', function () {
+          pm.expect(pm.response.code).to.be.below(500);
+      });

@@ -1,0 +1,33 @@
+$kind: http-request
+name: Get User by ID
+order: 6000
+method: GET
+url: '{{baseURL}}/api/auth/users/{{testUserId}}'
+pathVariables:
+  - key: testUserId
+    value: '{{testUserId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Get User by ID ────────────────────────────────────────────────────
+      pm.test('Get User returns 200, 401, 403, or 404', function () {
+          pm.expect([200, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('User object has id, username, and role', function () {
+              var json = pm.response.json();
+              var user = json.user || json;
+              pm.expect(user).to.have.property('id');
+              pm.expect(user).to.have.property('username');
+              pm.expect(user).to.have.property('role');
+          });
+      }
+
+      if (pm.response.code === 404) {
+          pm.test('Not-found response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

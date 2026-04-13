@@ -1,0 +1,50 @@
+name: Flowbiz - Production
+values:
+  - key: baseURL
+    value: 'https://api.flowbiz.example.com'
+    enabled: true
+    type: default
+  - key: authCookie
+    value: ''
+    enabled: true
+    type: default
+  - key: testUsername
+    value: ''
+    enabled: true
+    type: default
+  - key: testPassword
+    value: ''
+    enabled: true
+    type: default
+  - key: testUserId
+    value: ''
+    enabled: true
+    type: default
+  - key: testSupplierId
+    value: ''
+    enabled: true
+    type: default
+  - key: testProductId
+    value: ''
+    enabled: true
+    type: default
+  - key: testTransactionId
+    value: ''
+    enabled: true
+    type: default
+  - key: testDeliveryId
+    value: ''
+    enabled: true
+    type: default
+  - key: testReceiptId
+    value: ''
+    enabled: true
+    type: default
+  - key: testPoId
+    value: ''
+    enabled: true
+    type: default
+  - key: testCustomerId
+    value: ''
+    enabled: true
+    type: default

@@ -1,0 +1,36 @@
+$kind: http-request
+name: Get Supplier by ID
+order: 2000
+method: GET
+url: '{{baseURL}}/api/suppliers/{{testSupplierId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Get Supplier by ID ────────────────────────────────────────────────
+      pm.test('Get Supplier returns 200, 401, 403, or 404', function () {
+          pm.expect([200, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Supplier object has id, name, and approval_status', function () {
+              var json = pm.response.json();
+              var supplier = json.supplier || json;
+              pm.expect(supplier).to.have.property('id');
+              pm.expect(supplier).to.have.property('name');
+              pm.expect(supplier).to.have.property('approval_status');
+          });
+
+          pm.test('Supplier has contacts array', function () {
+              var json = pm.response.json();
+              var supplier = json.supplier || json;
+              pm.expect(supplier.contacts).to.be.an('array');
+          });
+      }
+
+      if (pm.response.code === 404) {
+          pm.test('Not-found response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

@@ -1,0 +1,9 @@
+$kind: collection
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Folder-level: Suppliers — runs after every request in 04 Suppliers
+      pm.test('Suppliers endpoint does not return a server error (5xx)', function () {
+          pm.expect(pm.response.code).to.be.below(500);
+      });

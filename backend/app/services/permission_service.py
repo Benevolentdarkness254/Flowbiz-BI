@@ -13,8 +13,17 @@ from app.models.auth import Role, Permission, RolePermission
 
 # Canonical role-to-permission mappings.
 # Each role gets ONLY the permissions listed here.
-# system_admin gets ALL permissions automatically.
 ROLE_PERMISSION_MAP = {
+    "system_admin": [
+        "user.create",
+        "user.edit",
+        "user.view",
+        "user.delete",
+        "system.backup",
+        "system.config",
+        "system.audit",
+        "system.logs",
+    ],
     "business_owner": [
         "sale.view",
         "sale.refund",
@@ -67,8 +76,7 @@ ROLE_PERMISSION_MAP = {
 def seed_role_permissions():
     """
     Clear all existing role_permissions and re-seed from ROLE_PERMISSION_MAP.
-    system_admin is intentionally omitted — it gets ALL permissions dynamically
-    via the admin bypass in the permission decorator and usePermission hook.
+    All roles including system_admin must have permissions explicitly listed.
     """
     # Clear existing mappings
     RolePermission.query.delete()

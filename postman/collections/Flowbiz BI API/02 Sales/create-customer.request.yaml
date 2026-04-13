@@ -1,0 +1,53 @@
+$kind: http-request
+name: Create Customer
+order: 5000
+method: POST
+url: '{{baseURL}}/api/sales/customers'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Acme Ltd",
+      "customer_type": "business",
+      "phone": "+254700000010",
+      "email": "acme@example.com",
+      "address": "123 Nairobi CBD",
+      "zone": "Zone A",
+      "credit_limit": 50000,
+      "kra_pin": "A001234567B"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create Customer ───────────────────────────────────────────────────
+      // 201 = created, 400 = validation, 401/403 = auth, 409 = duplicate
+      pm.test('Create Customer returns 201, 400, 401, 403, or 409', function () {
+          pm.expect([201, 400, 401, 403, 409]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created customer has id and name', function () {
+              var json = pm.response.json();
+              var customer = json.customer || json;
+              pm.expect(customer).to.have.property('id');
+              pm.expect(customer).to.have.property('name');
+          });
+
+          // Store new customer id for use in get/update/delete tests
+          var json = pm.response.json();
+          var customer = json.customer || json;
+          if (customer.id) {
+              pm.collectionVariables.set('testCustomerId', String(customer.id));
+          }
+      }
+
+      if ([400, 409].includes(pm.response.code)) {
+          pm.test('Validation/conflict error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

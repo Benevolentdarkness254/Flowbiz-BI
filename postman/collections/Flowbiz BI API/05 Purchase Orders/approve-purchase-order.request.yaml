@@ -1,0 +1,28 @@
+$kind: http-request
+name: Approve Purchase Order
+order: 3000
+method: POST
+url: '{{baseURL}}/api/purchase-orders/{{testPurchaseOrderId}}/approve'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Approve Purchase Order ────────────────────────────────────────────
+      // Depends on testPurchaseOrderId set by List/Create PO.
+      pm.test('Approve PO returns 200, 400, 401, 403, or 404', function () {
+          pm.expect([200, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Approve PO response has message or purchase_order field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.purchase_order).to.exist;
+          });
+      }
+
+      if (pm.response.code === 400) {
+          pm.test('Cannot approve error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

@@ -1,0 +1,40 @@
+$kind: http-request
+name: Update Outbound Delivery Status
+order: 4000
+method: PATCH
+url: '{{baseURL}}/api/deliveries/outbound/{{testDeliveryId}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "status": "delivered",
+      "signature_captured": true,
+      "delivery_notes": "Delivered to gate guard"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Update Outbound Delivery Status ───────────────────────────────────
+      pm.test('Update Delivery Status returns 200, 400, 401, 403, or 404', function () {
+          pm.expect([200, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Updated delivery has id and status', function () {
+              var json = pm.response.json();
+              var delivery = json.delivery || json;
+              pm.expect(delivery).to.have.property('id');
+              pm.expect(delivery).to.have.property('status');
+          });
+      }
+
+      if ([400, 404].includes(pm.response.code)) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

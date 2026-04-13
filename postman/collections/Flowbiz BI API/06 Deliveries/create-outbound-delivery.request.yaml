@@ -1,0 +1,50 @@
+$kind: http-request
+name: Create Outbound Delivery
+order: 3000
+method: POST
+url: '{{baseURL}}/api/deliveries/outbound'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "transaction_id": 1,
+      "driver_id": 5,
+      "scheduled_date": "2025-08-10T09:00:00",
+      "delivery_zone": "Zone A",
+      "delivery_notes": "Call customer 30 minutes before arrival"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create Outbound Delivery ──────────────────────────────────────────
+      // 201 = created, 400 = validation, 401/403 = auth, 404 = transaction not found
+      pm.test('Create Outbound Delivery returns 201, 400, 401, 403, or 404', function () {
+          pm.expect([201, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created delivery has id and status', function () {
+              var json = pm.response.json();
+              var delivery = json.delivery || json;
+              pm.expect(delivery).to.have.property('id');
+              pm.expect(delivery).to.have.property('status');
+          });
+
+          // Save new delivery id for downstream tests
+          var json = pm.response.json();
+          var delivery = json.delivery || json;
+          if (delivery.id) {
+              pm.collectionVariables.set('testDeliveryId', String(delivery.id));
+          }
+      }
+
+      if ([400, 404].includes(pm.response.code)) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

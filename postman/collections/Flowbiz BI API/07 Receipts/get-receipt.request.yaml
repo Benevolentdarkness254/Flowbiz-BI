@@ -1,0 +1,36 @@
+$kind: http-request
+name: Get Receipt by ID
+order: 2000
+method: GET
+url: '{{baseURL}}/api/receipts/{{testReceiptId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Get Receipt by ID ─────────────────────────────────────────────────
+      pm.test('Get Receipt returns 200, 401, 403, or 404', function () {
+          pm.expect([200, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Receipt object has id, status, and total_amount', function () {
+              var json = pm.response.json();
+              var receipt = json.receipt || json;
+              pm.expect(receipt).to.have.property('id');
+              pm.expect(receipt).to.have.property('status');
+              pm.expect(receipt).to.have.property('total_amount');
+          });
+
+          pm.test('Receipt has items array', function () {
+              var json = pm.response.json();
+              var receipt = json.receipt || json;
+              pm.expect(receipt.items || receipt.line_items).to.be.an('array');
+          });
+      }
+
+      if (pm.response.code === 404) {
+          pm.test('Not-found response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

@@ -1,0 +1,29 @@
+$kind: http-request
+name: Get Outbound Delivery Detail
+order: 2000
+method: GET
+url: '{{baseURL}}/api/deliveries/outbound/{{testDeliveryId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Get Outbound Delivery Detail ──────────────────────────────────────
+      pm.test('Get Outbound Delivery returns 200, 401, 403, or 404', function () {
+          pm.expect([200, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Delivery object has id and status', function () {
+              var json = pm.response.json();
+              var delivery = json.delivery || json;
+              pm.expect(delivery).to.have.property('id');
+              pm.expect(delivery).to.have.property('status');
+          });
+      }
+
+      if (pm.response.code === 404) {
+          pm.test('Not-found response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

@@ -1,0 +1,28 @@
+$kind: http-request
+name: Approve Supplier
+order: 6000
+method: POST
+url: '{{baseURL}}/api/suppliers/{{testSupplierId}}/approve'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Approve Supplier ──────────────────────────────────────────────────
+      // 200 = approved, 400 = already approved, 401/403 = auth, 404 = not found
+      pm.test('Approve Supplier returns 200, 400, 401, 403, or 404', function () {
+          pm.expect([200, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Approve response has message or supplier field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.supplier).to.exist;
+          });
+      }
+
+      if (pm.response.code === 400) {
+          pm.test('Already-approved error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

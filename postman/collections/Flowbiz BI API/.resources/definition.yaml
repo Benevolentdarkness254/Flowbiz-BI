@@ -1,0 +1,73 @@
+$kind: collection
+name: Flowbiz BI API
+description: |-
+  Complete REST API collection for the Flowbiz Business Intelligence platform.
+  Covers authentication, sales, inventory, suppliers, purchase orders, deliveries,
+  receipts, BI/reporting dashboards, and system administration.
+
+  **Auth:** All protected endpoints use JWT stored in an HTTP-only cookie.
+  Call POST /api/auth/login first, then the cookie is sent automatically on
+  subsequent requests (enable "Send cookies" in Postman settings).
+
+  **Base URL variable:** {{baseURL}}  e.g. http://localhost:5000
+variables:
+  - key: baseURL
+    value: 'http://localhost:5000'
+    description: 'Base URL of the Flowbiz backend (no trailing slash)'
+  - key: testUsername
+    value: admin
+    description: 'Username used for login tests'
+  - key: testPassword
+    value: admin123
+    description: 'Password used for login tests'
+  - key: testSupplierId
+    value: '1'
+    description: 'Supplier ID used in get/update/delete supplier tests; overwritten by List/Create Supplier'
+  - key: testReceiptId
+    value: '1'
+    description: 'Receipt ID used in get/void receipt tests; overwritten by List Receipts'
+  - key: testCustomerId
+    value: ''
+    description: 'Set automatically after List/Create Customer succeeds'
+  - key: testTransactionId
+    value: ''
+    description: 'Set automatically after List/Create Sale Transaction succeeds'
+  - key: testPurchaseOrderId
+    value: ''
+    description: 'Set automatically after List/Create Purchase Order succeeds'
+  - key: testDeliveryId
+    value: ''
+    description: 'Set automatically after List/Create Outbound Delivery succeeds'
+  - key: testUserId
+    value: ''
+    description: 'Set automatically after Login (loggedInUserId) — copy here for user CRUD tests'
+  - key: testBackupFilename
+    value: ''
+    description: 'Set automatically after List Backups succeeds'
+scripts:
+  - type: http:afterResponse
+    language: text/javascript
+    code: |-
+      // Collection-level global sanity checks — run after every request
+
+      // 1. Response time under 5 seconds (generous for local dev)
+      pm.test('Response time is under 5000 ms', function () {
+          pm.expect(pm.response.responseTime).to.be.below(5000);
+      });
+
+      // 2. Every response must carry a Content-Type header
+      pm.test('Response has Content-Type header', function () {
+          pm.expect(pm.response.headers.get('Content-Type')).to.exist;
+      });
+
+      // 3. Non-204 responses should be JSON
+      if (pm.response.code !== 204) {
+          pm.test('Content-Type is application/json', function () {
+              pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');
+          });
+
+          // 4. Body must parse as valid JSON
+          pm.test('Response body is valid JSON', function () {
+              pm.response.json();
+          });
+      }

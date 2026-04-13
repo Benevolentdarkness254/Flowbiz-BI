@@ -6,6 +6,7 @@ from flask_jwt_extended import (
     unset_jwt_cookies,
     jwt_required,
     get_jwt_identity,
+    get_jwt,
 )
 from marshmallow import ValidationError
 from app.services.auth_service import authenticate, create_user
@@ -13,6 +14,7 @@ from app.models.auth import User
 from app.schemas.auth import LoginSchema, UserSchema, CreateUserSchema
 from app.api.decorators import require_permission
 from app.extensions import db
+from datetime import datetime
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -21,10 +23,34 @@ user_schema = UserSchema()
 create_user_schema = CreateUserSchema()
 
 
+def _log_audit(
+    user_id, action, table_name, record_id, old_value, new_value, ip_address
+):
+    """Write an entry to the audit_log table."""
+    db.session.execute(
+        db.text("""
+            INSERT INTO audit_log (user_id, action, table_name, record_id, old_value, new_value, ip_address, created_at)
+            VALUES (:user_id, :action, :table_name, :record_id, :old_value, :new_value, :ip_address, :created_at)
+        """),
+        {
+            "user_id": user_id,
+            "action": action,
+            "table_name": table_name,
+            "record_id": record_id,
+            "old_value": old_value,
+            "new_value": new_value,
+            "ip_address": ip_address,
+            "created_at": datetime.utcnow(),
+        },
+    )
+    db.session.commit()
+
+
 @auth_bp.post("/login")
 def login():
     """
     Authenticate a user and issue a JWT stored in an HTTP-only cookie.
+    Logs the login event to audit_log for security tracking.
     """
     try:
         data = login_schema.load(request.get_json() or {})
@@ -49,13 +75,43 @@ def login():
     # set_access_cookies sets an HTTP-only cookie — JavaScript cannot read it
     # This is what makes it safe against XSS attacks
     set_access_cookies(response, token)
+
+    # Log successful login to audit trail
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+    if ip and "," in ip:
+        ip = ip.split(",")[0].strip()
+    _log_audit(
+        user_id=user.user_id,
+        action="login",
+        table_name="users",
+        record_id=user.user_id,
+        old_value=None,
+        new_value=f'{{"username": "{user.username}", "role": "{user.role.role_name}"}}',
+        ip_address=ip,
+    )
+
     return response
 
 
 @auth_bp.post("/logout")
 @jwt_required()
 def logout():
-    """Clear the JWT cookie."""
+    """Clear the JWT cookie and log the logout event."""
+    user_id = int(get_jwt_identity())
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+    if ip and "," in ip:
+        ip = ip.split(",")[0].strip()
+
+    _log_audit(
+        user_id=user_id,
+        action="logout",
+        table_name="users",
+        record_id=user_id,
+        old_value=None,
+        new_value='{"event": "user_logged_out"}',
+        ip_address=ip,
+    )
+
     response = jsonify(message="Logged out successfully")
     unset_jwt_cookies(response)
     return response

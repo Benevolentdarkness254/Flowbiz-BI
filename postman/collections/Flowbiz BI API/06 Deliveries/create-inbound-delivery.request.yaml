@@ -1,0 +1,56 @@
+$kind: http-request
+name: Create Inbound Delivery (receive stock)
+order: 7000
+method: POST
+url: '{{baseURL}}/api/deliveries/inbound'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "supplier_id": 1,
+      "delivery_note_ref": "DN-2025-0042",
+      "notes": "All items received in good condition",
+      "items": [
+        {
+          "product_id": 1,
+          "quantity_expected": 100,
+          "quantity_received": 98,
+          "unit_cost": 450.00
+        },
+        {
+          "product_id": 2,
+          "quantity_expected": 50,
+          "quantity_received": 50,
+          "unit_cost": 250.00
+        }
+      ]
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create Inbound Delivery (receive stock) ───────────────────────────
+      // This is a mutating endpoint that updates stock levels.
+      // 201 = created, 400 = validation, 401/403 = auth, 404 = supplier not found
+      pm.test('Create Inbound Delivery returns 201, 400, 401, 403, or 404', function () {
+          pm.expect([201, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created inbound delivery has id and supplier_id', function () {
+              var json = pm.response.json();
+              var delivery = json.delivery || json;
+              pm.expect(delivery).to.have.property('id');
+              pm.expect(delivery).to.have.property('supplier_id');
+          });
+      }
+
+      if ([400, 404].includes(pm.response.code)) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

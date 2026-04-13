@@ -1,0 +1,48 @@
+$kind: http-request
+name: List Audit Logs
+order: 1000
+method: GET
+url: '{{baseURL}}/api/system/audit'
+queryParams:
+  - key: page
+    value: '1'
+  - key: per_page
+    value: '50'
+  - key: table_name
+    value: users
+    description: Filter by table name
+    disabled: true
+  - key: action
+    value: UPDATE
+    description: 'Filter by action: INSERT, UPDATE, DELETE'
+    disabled: true
+  - key: user_id
+    value: '1'
+    description: Filter by user ID
+    disabled: true
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── List Audit Logs ───────────────────────────────────────────────────
+      // Admin-only endpoint.
+      pm.test('List Audit Logs returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Audit logs response contains a list', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.logs || json.audit_logs || json.data);
+              pm.expect(list).to.be.an('array');
+          });
+
+          pm.test('Each audit log has table_name and action fields', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.logs || json.audit_logs || json.data);
+              if (list.length > 0) {
+                  pm.expect(list[0]).to.have.property('table_name');
+                  pm.expect(list[0]).to.have.property('action');
+              }
+          });
+      }

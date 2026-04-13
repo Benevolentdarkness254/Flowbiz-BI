@@ -1,0 +1,68 @@
+$kind: http-request
+name: Create Purchase Order
+order: 2000
+method: POST
+url: '{{baseURL}}/api/purchase-orders/'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "supplier_id": 1,
+      "expected_delivery": "2025-08-15",
+      "notes": "Urgent restock for 20L bottles",
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 100,
+          "unit_price": 450.00
+        },
+        {
+          "product_id": 2,
+          "quantity": 50,
+          "unit_price": 250.00
+        }
+      ]
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create Purchase Order ─────────────────────────────────────────────
+      // 201 = created, 400 = validation, 401/403 = auth, 422 = business rule
+      pm.test('Create PO returns 201, 400, 401, 403, or 422', function () {
+          pm.expect([201, 400, 401, 403, 422]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created PO has id and status', function () {
+              var json = pm.response.json();
+              var po = json.purchase_order || json;
+              pm.expect(po).to.have.property('id');
+              pm.expect(po).to.have.property('status');
+          });
+
+          pm.test('New PO starts with pending or draft status', function () {
+              var json = pm.response.json();
+              var po = json.purchase_order || json;
+              if (po.status) {
+                  pm.expect(['pending', 'draft', 'pending_approval']).to.include(po.status);
+              }
+          });
+
+          // Save new PO id for downstream tests
+          var json = pm.response.json();
+          var po = json.purchase_order || json;
+          if (po.id) {
+              pm.collectionVariables.set('testPurchaseOrderId', String(po.id));
+          }
+      }
+
+      if ([400, 422].includes(pm.response.code)) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

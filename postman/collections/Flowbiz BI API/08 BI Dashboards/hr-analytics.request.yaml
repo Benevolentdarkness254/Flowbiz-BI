@@ -1,0 +1,38 @@
+$kind: http-request
+name: HR Analytics
+order: 12000
+method: GET
+url: '{{baseURL}}/api/bi/hr/analytics'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── HR Analytics ──────────────────────────────────────────────────────
+      // Admin-only endpoint for staff performance metrics.
+      pm.test('HR Analytics returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('HR analytics response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('HR analytics has staff metrics', function () {
+              var json = pm.response.json();
+              var data = json.analytics || json;
+              var hasMetric = data.hasOwnProperty('total_staff') ||
+                              data.hasOwnProperty('active_users') ||
+                              data.hasOwnProperty('staff_count') ||
+                              data.hasOwnProperty('users');
+              pm.expect(hasMetric).to.be.true;
+          });
+      }
+
+      if (pm.response.code === 403) {
+          pm.test('Forbidden response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

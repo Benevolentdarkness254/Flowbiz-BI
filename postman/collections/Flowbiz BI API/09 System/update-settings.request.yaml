@@ -1,0 +1,56 @@
+$kind: http-request
+name: Update System Settings
+order: 7000
+method: PATCH
+url: '{{baseURL}}/api/system/settings'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "company_name": "Flowbiz Water Ltd",
+      "company_phone": "+254700000000",
+      "tax_rate": "0.16",
+      "currency": "KES",
+      "mpesa_enabled": true,
+      "sms_enabled": true,
+      "kra_etims_enabled": false,
+      "low_stock_threshold_default": 10,
+      "kra_submission_mode": "manual",
+      "zone_eta": {
+        "Zone A": 30,
+        "Zone B": 45,
+        "Zone C": 60,
+        "Zone D": 90,
+        "default": 45
+      }
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Update System Settings ────────────────────────────────────────────
+      pm.test('Update Settings returns 200, 400, 401, or 403', function () {
+          pm.expect([200, 400, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Updated settings response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('Updated settings has message or settings field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.settings).to.exist;
+          });
+      }
+
+      if (pm.response.code === 400) {
+          pm.test('Validation error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

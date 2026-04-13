@@ -1,0 +1,40 @@
+$kind: http-request
+name: Manual Stock Adjustment
+order: 3000
+method: POST
+url: '{{baseURL}}/api/inventory/adjust'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "product_id": 1,
+      "quantity_change": -5,
+      "notes": "Write-off: damaged goods found during stocktake"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Manual Stock Adjustment ───────────────────────────────────────────
+      // This is a mutating endpoint. We test that it either succeeds or returns
+      // a meaningful error — we do NOT assert 201 to avoid side-effect dependency.
+      pm.test('Stock Adjustment returns 200, 201, 400, 401, 403, or 422', function () {
+          pm.expect([200, 201, 400, 401, 403, 422]).to.include(pm.response.code);
+      });
+
+      if ([400, 422].includes(pm.response.code)) {
+          pm.test('Stock adjustment error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }
+
+      if ([200, 201].includes(pm.response.code)) {
+          pm.test('Successful adjustment response has a message or updated stock', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.new_stock || json.current_stock).to.exist;
+          });
+      }

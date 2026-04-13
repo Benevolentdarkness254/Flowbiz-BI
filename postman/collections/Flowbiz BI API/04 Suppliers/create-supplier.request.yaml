@@ -1,0 +1,71 @@
+$kind: http-request
+name: Create Supplier
+order: 3000
+method: POST
+url: '{{baseURL}}/api/suppliers/'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Nairobi Water Supplies Ltd",
+      "supplier_type": "manufacturer",
+      "kra_pin": "A001234567B",
+      "payment_terms": 30,
+      "address": "Industrial Area, Nairobi",
+      "contract_start": "2025-01-01",
+      "contract_end": "2026-12-31",
+      "goods_dealt_with": "20L water bottles, 10L water bottles",
+      "notes": "Primary water supplier",
+      "contacts": [
+        {
+          "contact_name": "John Kamau",
+          "role": "Sales Manager",
+          "phone": "+254700000020",
+          "email": "jkamau@nwsl.co.ke",
+          "is_primary": true
+        }
+      ]
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create Supplier ───────────────────────────────────────────────────
+      // 201 = created, 400 = validation, 401/403 = auth, 409 = duplicate KRA PIN
+      pm.test('Create Supplier returns 201, 400, 401, 403, or 409', function () {
+          pm.expect([201, 400, 401, 403, 409]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created supplier has id and name', function () {
+              var json = pm.response.json();
+              var supplier = json.supplier || json;
+              pm.expect(supplier).to.have.property('id');
+              pm.expect(supplier).to.have.property('name');
+          });
+
+          pm.test('New supplier starts with pending approval status', function () {
+              var json = pm.response.json();
+              var supplier = json.supplier || json;
+              if (supplier.approval_status) {
+                  pm.expect(supplier.approval_status).to.equal('pending');
+              }
+          });
+
+          // Save new supplier id for downstream tests
+          var json = pm.response.json();
+          var supplier = json.supplier || json;
+          if (supplier.id) {
+              pm.collectionVariables.set('testSupplierId', String(supplier.id));
+          }
+      }
+
+      if ([400, 409].includes(pm.response.code)) {
+          pm.test('Validation/conflict error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

@@ -1,0 +1,44 @@
+$kind: http-request
+name: Create User
+order: 5000
+method: POST
+url: '{{baseURL}}/api/auth/users'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "jdoe",
+      "full_name": "Jane Doe",
+      "email": "jdoe@example.com",
+      "phone": "+254700000001",
+      "password": "SecurePass1!",
+      "role_name": "sales_staff"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create User ───────────────────────────────────────────────────────
+      // 201 = created, 400 = validation error, 409 = duplicate username/email,
+      // 401/403 = not authorised to create users.
+      pm.test('Create User returns 201, 400, 401, 403, or 409', function () {
+          pm.expect([201, 400, 401, 403, 409]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created user has an id field', function () {
+              var json = pm.response.json();
+              var user = json.user || json;
+              pm.expect(user).to.have.property('id');
+          });
+      }
+
+      if (pm.response.code === 400 || pm.response.code === 409) {
+          pm.test('Error response contains an error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

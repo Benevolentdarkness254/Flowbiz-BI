@@ -1,0 +1,30 @@
+$kind: http-request
+name: Dashboard - Key Metrics (today)
+order: 1000
+method: GET
+url: '{{baseURL}}/api/bi/dashboard'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Dashboard Overview ────────────────────────────────────────────────
+      pm.test('Dashboard Overview returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Dashboard response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('Dashboard has at least one key metric', function () {
+              var json = pm.response.json();
+              var hasMetric = json.hasOwnProperty('total_sales') ||
+                              json.hasOwnProperty('revenue') ||
+                              json.hasOwnProperty('total_revenue') ||
+                              json.hasOwnProperty('orders_today') ||
+                              json.hasOwnProperty('sales_today');
+              pm.expect(hasMetric).to.be.true;
+          });
+      }

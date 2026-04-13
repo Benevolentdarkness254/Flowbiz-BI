@@ -1,0 +1,29 @@
+$kind: http-request
+name: Trigger Database Backup
+order: 4000
+method: POST
+url: '{{baseURL}}/api/system/backups'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Trigger Database Backup ───────────────────────────────────────────
+      // System operation — may take time. 201 = backup started/created,
+      // 401/403 = auth, 503 = backup service unavailable.
+      pm.test('Create Backup returns 200, 201, 401, 403, or 503', function () {
+          pm.expect([200, 201, 401, 403, 503]).to.include(pm.response.code);
+      });
+
+      if ([200, 201].includes(pm.response.code)) {
+          pm.test('Backup response has message or filename field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.filename || json.backup).to.exist;
+          });
+      }
+
+      if (pm.response.code === 503) {
+          pm.test('Service unavailable error has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

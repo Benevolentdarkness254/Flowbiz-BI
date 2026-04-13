@@ -1,0 +1,28 @@
+$kind: http-request
+name: Dashboard - Admin / System Health
+order: 5000
+method: GET
+url: '{{baseURL}}/api/bi/dashboard/admin'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Dashboard - Admin / System Health ─────────────────────────────────
+      // Only accessible to admin/system_admin roles.
+      pm.test('Admin Dashboard returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Admin dashboard response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+      }
+
+      if (pm.response.code === 403) {
+          pm.test('Forbidden response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

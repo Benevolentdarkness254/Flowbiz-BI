@@ -1,0 +1,20 @@
+$kind: http-request
+name: Delete Customer (soft)
+order: 8000
+method: DELETE
+url: '{{baseURL}}/api/sales/customers/{{testCustomerId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Delete Customer (soft delete) ─────────────────────────────────────
+      pm.test('Delete Customer returns 200, 204, 401, 403, or 404', function () {
+          pm.expect([200, 204, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Delete response has a message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.success).to.exist;
+          });
+      }

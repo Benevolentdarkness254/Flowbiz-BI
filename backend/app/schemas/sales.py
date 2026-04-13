@@ -6,6 +6,7 @@ from marshmallow import (
     ValidationError,
     pre_load,
     post_load,
+    post_dump,
 )
 from flask_marshmallow import Marshmallow
 from app.models.sales import Customer, SaleTransaction, SaleItem
@@ -99,14 +100,15 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
         exclude = ("deleted_at",)
         load_instance = True
 
-    customer_type = fields.Str(load_default="walk_in")
+    customer_type = fields.Enum(
+        CustomerType, by_value=True, load_default=CustomerType.WALK_IN
+    )
 
     @pre_load
     def normalize_data(self, data, **kwargs):
         """
         Normalize incoming data before loading:
         - Convert credit_limit string to float
-        - Convert customer_type string to Enum
         """
         # Convert credit_limit to number
         if "credit_limit" in data and isinstance(data["credit_limit"], str):
@@ -115,15 +117,4 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
             except (ValueError, TypeError):
                 data["credit_limit"] = 0
 
-        # Convert customer_type string to Enum
-        if "customer_type" in data and isinstance(data["customer_type"], str):
-            try:
-                data["customer_type"] = CustomerType(data["customer_type"])
-            except ValueError:
-                data["customer_type"] = CustomerType.WALK_IN
-
         return data
-
-    def get_customer_type(self, obj):
-        """Serialize customer_type Enum to string for API responses."""
-        return obj.customer_type.value if obj.customer_type else None

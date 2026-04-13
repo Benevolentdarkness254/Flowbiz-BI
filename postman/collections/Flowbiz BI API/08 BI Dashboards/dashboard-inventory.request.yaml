@@ -1,0 +1,29 @@
+$kind: http-request
+name: Dashboard - Inventory Staff View
+order: 3000
+method: GET
+url: '{{baseURL}}/api/bi/dashboard/inventory'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Dashboard - Inventory Staff View ──────────────────────────────────
+      pm.test('Inventory Dashboard returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Inventory dashboard response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('Inventory dashboard has stock-related metrics', function () {
+              var json = pm.response.json();
+              var hasMetric = json.hasOwnProperty('low_stock_count') ||
+                              json.hasOwnProperty('total_products') ||
+                              json.hasOwnProperty('stock_alerts') ||
+                              json.hasOwnProperty('out_of_stock');
+              pm.expect(hasMetric).to.be.true;
+          });
+      }

@@ -1,0 +1,28 @@
+$kind: http-request
+name: Restore Deleted User
+order: 9000
+method: POST
+url: '{{baseURL}}/api/auth/users/{{testUserId}}/restore'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Restore Deleted User ──────────────────────────────────────────────
+      // 200 = restored, 400 = user not deleted, 401/403 = auth, 404 = not found
+      pm.test('Restore User returns 200, 400, 401, 403, or 404', function () {
+          pm.expect([200, 400, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Restore response has a message or user field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.user).to.exist;
+          });
+      }
+
+      if ([400, 404].includes(pm.response.code)) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

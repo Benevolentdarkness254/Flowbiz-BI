@@ -1,0 +1,29 @@
+$kind: http-request
+name: List Roles
+order: 10000
+method: GET
+url: '{{baseURL}}/api/auth/roles'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── List Roles ────────────────────────────────────────────────────────
+      pm.test('List Roles returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Roles response is an array', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.roles || json.data);
+              pm.expect(list).to.be.an('array');
+          });
+
+          pm.test('Each role has a name field', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.roles || json.data);
+              if (list.length > 0) {
+                  pm.expect(list[0]).to.have.property('name');
+              }
+          });
+      }

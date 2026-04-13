@@ -1,0 +1,28 @@
+$kind: http-request
+name: Delete Backup File
+order: 5000
+method: DELETE
+url: '{{baseURL}}/api/system/backups/flowbiz_backup_20250801_120000.sql'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Delete Backup File ────────────────────────────────────────────────
+      // 200/204 = deleted, 401/403 = auth, 404 = backup file not found
+      pm.test('Delete Backup returns 200, 204, 401, 403, or 404', function () {
+          pm.expect([200, 204, 401, 403, 404]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Delete backup response has message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.message || json.success).to.exist;
+          });
+      }
+
+      if (pm.response.code === 404) {
+          pm.test('Not-found response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }

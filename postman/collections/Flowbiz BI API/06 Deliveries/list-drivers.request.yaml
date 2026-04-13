@@ -1,0 +1,30 @@
+$kind: http-request
+name: List Drivers
+order: 8000
+method: GET
+url: '{{baseURL}}/api/deliveries/drivers'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── List Drivers ──────────────────────────────────────────────────────
+      pm.test('List Drivers returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Drivers response is an array', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.drivers || json.data);
+              pm.expect(list).to.be.an('array');
+          });
+
+          pm.test('Each driver has id and name fields', function () {
+              var json = pm.response.json();
+              var list = Array.isArray(json) ? json : (json.drivers || json.data);
+              if (list.length > 0) {
+                  pm.expect(list[0]).to.have.property('id');
+                  pm.expect(list[0]).to.have.property('name');
+              }
+          });
+      }

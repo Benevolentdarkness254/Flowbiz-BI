@@ -1,0 +1,30 @@
+$kind: http-request
+name: Delivery Analytics
+order: 10000
+method: GET
+url: '{{baseURL}}/api/bi/deliveries/analytics'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Delivery Analytics ────────────────────────────────────────────────
+      pm.test('Delivery Analytics returns 200 or 401/403', function () {
+          pm.expect([200, 401, 403]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 200) {
+          pm.test('Delivery analytics response is an object', function () {
+              var json = pm.response.json();
+              pm.expect(json).to.be.an('object');
+          });
+
+          pm.test('Delivery analytics has delivery metrics', function () {
+              var json = pm.response.json();
+              var data = json.analytics || json;
+              var hasMetric = data.hasOwnProperty('total_deliveries') ||
+                              data.hasOwnProperty('on_time_rate') ||
+                              data.hasOwnProperty('delivered_count') ||
+                              data.hasOwnProperty('pending_count');
+              pm.expect(hasMetric).to.be.true;
+          });
+      }

@@ -1,16 +1,27 @@
+# Import the database instance from app.extensions.
+# This 'db' object is typically an instance of SQLAlchemy,
+# used for database operations like session management and model definition.
 from app.extensions import db
-from app.models.inventory import Product, InventoryMovement, StockAlert
 from app.models.enums import StockMovementType
+from app.models.inventory import InventoryMovement, Product, StockAlert
+
+# This module defines functions for managing inventory,
+# including adjusting product stock levels and generating stock alerts.
+# It interacts with the database models for Product, InventoryMovement, and StockAlert.
 
 
 def adjust_stock(
-    product_id: int,
-    quantity_change: int,
-    movement_type: StockMovementType,
-    performed_by_id: int,
-    reference_type: str = None,
-    reference_id: int = None,
-    notes: str = None,
+    product_id: int,  # product_id: The unique identifier for the product whose stock is being adjusted.
+    quantity_change: int,  # quantity_change: The amount by which the stock should change.
+    #                  Positive values indicate an increase (e.g., receiving new stock).
+    #                  Negative values indicate a decrease (e.g., selling a product).
+    movement_type: StockMovementType,  # movement_type: An enumeration member indicating the nature of the stock change
+    #                (e.g., StockMovementType.IN, StockMovementType.OUT, StockMovementType.ADJUSTMENT).
+    performed_by_id: int,  # performed_by_id: The ID of the user or system responsible for this stock adjustment.
+    reference_type: str = None,  # reference_type: Optional string to categorize the external reference
+    #                 (e.g., "ORDER", "RETURN", "MANUAL_ADJUSTMENT"). Defaults to None.
+    reference_id: int = None,  # reference_id: Optional integer ID linking to an external record, such as an order ID or return ID. Defaults to None.
+    notes: str = None,  # notes: Optional text field for additional comments or details about the stock movement. Defaults to None.
 ) -> InventoryMovement:
     product = db.session.get(Product, product_id)
     if not product:
@@ -36,6 +47,12 @@ def adjust_stock(
     db.session.add(movement)
     _check_and_create_alert(product)
     return movement
+
+    # This private helper function is responsible for evaluating a product's stock level
+    # immediately after a stock adjustment.
+    # If the stock falls below the minimum threshold or becomes zero, it creates
+    # a new StockAlert entry in the database, preventing duplicate alerts for
+    # the same unresolved issue.
 
 
 def _check_and_create_alert(product: Product):

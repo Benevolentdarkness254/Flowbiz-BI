@@ -1,0 +1,56 @@
+$kind: http-request
+name: Create Sale Transaction
+order: 2000
+method: POST
+url: '{{baseURL}}/api/sales/transactions'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "customer_id": 1,
+      "payment_method": "cash",
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "unit_price": 500.00
+        }
+      ],
+      "delivery_driver_id": null,
+      "delivery_date": null
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      // ── Create Sale Transaction ───────────────────────────────────────────
+      // 201 = created, 400 = bad data (e.g. unknown product/customer),
+      // 401/403 = auth, 422 = business rule violation (e.g. insufficient stock)
+      pm.test('Create Transaction returns 201, 400, 401, 403, or 422', function () {
+          pm.expect([201, 400, 401, 403, 422]).to.include(pm.response.code);
+      });
+
+      if (pm.response.code === 201) {
+          pm.test('Created transaction has id and total_amount', function () {
+              var json = pm.response.json();
+              var tx = json.transaction || json;
+              pm.expect(tx).to.have.property('id');
+              pm.expect(tx).to.have.property('total_amount');
+          });
+
+          var json = pm.response.json();
+          var tx = json.transaction || json;
+          if (tx.id) {
+              pm.collectionVariables.set('testTransactionId', String(tx.id));
+          }
+      }
+
+      if ([400, 422].includes(pm.response.code)) {
+          pm.test('Error response has error or message field', function () {
+              var json = pm.response.json();
+              pm.expect(json.error || json.message).to.exist;
+          });
+      }
